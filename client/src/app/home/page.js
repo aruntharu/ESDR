@@ -1,22 +1,19 @@
-'use client'
-import Videos from '@/components/Videos/page'
-import Footer from '@/components/footer/page'
-import Heroimage from '@/components/heroimage/page'
-import NavBar from '@/components/navbar/page'
-import News from '@/components/news&events/page'
+"use client";
+import Footer from "@/components/footer/page";
+import NavBar from "@/components/navbar/page";
+import News from "@/components/news&events/page";
+import Carousel from "./carousel";
+import Videos from "@/components/Videos/page";
 
-import React from 'react'
-
-const home = () => {
+const Home = () => {
   return (
     <div>
-        <NavBar/>
-        <Heroimage/>
-        <News/>
-        <Videos/>
-        <Footer/>
+      <NavBar />
+      <Carousel />
+      <News />
+      <Videos/>
+      <Footer />
     </div>
-  )
-}
-
-export default home
+  );
+};
+export default Home;
