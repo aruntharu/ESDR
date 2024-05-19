@@ -36,10 +36,10 @@ const News = () => {
             <CardBody className="overflow-visible py-6">
               <Image
                 alt="Card background"
-                className="object-cover rounded-xl"
+                className="object-cover rounded-xl h-full"
                 src={item.newsImage}
                 width={270}
-                height={350}
+                height={300}
               />
             </CardBody>
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
