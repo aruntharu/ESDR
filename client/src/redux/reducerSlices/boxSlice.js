@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = { 
-  backgroundColor : 'red',
-  width: 50,
-  height: 50
- }
+    backgroundColor: 'red', 
+    width: 50,
+    height: 50
+}
 
 const boxSlice = createSlice({
   name: 'box',
   initialState: initialState,
   reducers: {
     changeHeight(state) {
-      state.value=state.value+1
+      state.height=state.height+1
     },
   },
 })
