@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import {NextUIProvider} from "@nextui-org/react";
-
+import { NextUIProvider } from "@nextui-org/react";
+Reduxpro
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -14,9 +14,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <NextUIProvider>
-        {children}
+
+            {children}
+           
         </NextUIProvider>
-        </body>
+      </body>
     </html>
   );
 }

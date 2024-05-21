@@ -1,11 +1,23 @@
-import YouTubeEmbed from "./YouTubeEmbed";
 
+const YouTubeEmbed = ({ videoId }) => {
+  return (
+    <div className="aspect-w-14 aspect-h-14 hover:scale-110 transition duration-500 cursor-pointer object-cover">
+      <iframe
+        className="w-full h-full"
+        src={`https://www.youtube.com/embed/${videoId}`}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        title="YouTube video player"
+      ></iframe>
+    </div>
+  );
+}
 
 
 const videos = [
-  { id: '2QCdaxAKW60' },
-  { id: '7krSnSKOXEc' },
-  { id: 'r_3jQyDWbn8' },
+  { id: 'Bvlm8M5nUxU' },
+  { id: 'K2GcmuMzhxQ' },
+  { id: '0FC3uS3h_2s' },
 ];
 
 const Videos = () => {
