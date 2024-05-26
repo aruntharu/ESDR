@@ -22,7 +22,7 @@ const NavBar = () => {
           <Link
             className="hover:bg-gray-400 rounded-lg p-1"
             color="foreground"
-            href="#"
+            href="./home"
           >
             Home
           </Link>
@@ -77,7 +77,7 @@ const NavBar = () => {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
+          <Link href="./login">Login</Link>
         </NavbarItem>
         <NavbarItem>
           <Button as={Link} color="primary" href="#" variant="flat">
