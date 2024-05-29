@@ -13,12 +13,12 @@ const bookList = [
 ]
 
 app.get('/books/:id', (req, res) => {
-  const selectBook = bookList.find((item)=>{
-    if(item.Bookname==req.params.id){
+  const selecBook = bookList.find((item)=>{
+    if(item.id==req.params.id){
       return item
     }
   })
-  res.send(selectBook)
+  res.send(selecBook)
 })
 
 app.listen(port, () => {
