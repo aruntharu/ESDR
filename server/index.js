@@ -1,24 +1,27 @@
 
 const express = require('express')
+const dbConnect = require('./src/db/connection')
+dbConnect()
 const app = express()
-const port = 5000
-const bookList = [
-  {id:1, Bookname: 'Asian Journal Vol 1', price: 4000},
-  {id:2, Bookname: 'Trafficking of Girls and Women in Nepal', price: 6000},
-  {id:3, Bookname: 'Situational Analysis and Baseline Study "Torture & Improper Use of Force in Nepal"', price: 4000},
-  {id:4, Bookname: 'Jurisprudence: The Philosophy of Law, Oriental Perspective, with Special Refere', price: 4000},
-  {id:5, Bookname: 'Criminal Justice System: Comparative Study of the Criminal Justice System of Nepal', price: 4000},
-  {id:6, Bookname: 'Asian Journal Vol 3', price: 4000},
+require('dotenv').config()
+const mongoose = require('mongoose')
+const { Schema } = mongoose;
 
-]
+const bookSchema = new Schema({
+  Bookname: String, // String is shorthand for {type: String}
+  price: String,
+  body: String,
+ 
+});
+const Book = mongoose.model('Book', bookSchema);
 
-app.get('/books/:id', (req, res) => {
-  const selecBook = bookList.find((item)=>{
-    if(item.id==req.params.id){
-      return item
-    }
-  })
-  res.send(selecBook)
+const port = process.env.PORT
+
+
+app.post('/books/', (req, res) => {
+  Book.create({Bookname:'ajia', price:'4000'})
+  
+
 })
 
 app.listen(port, () => {
