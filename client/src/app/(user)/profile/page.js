@@ -1,13 +1,11 @@
 'use client'
 import React from 'react'
-import Sidebar from './sidebar'
-import AdminNavbar from './navbar'
+import SideBar from '@/components/sidebar/page'
 
 const Dashboard = () => {
   return (
     <div>
-        <AdminNavbar/>
-        <Sidebar/>
+          <h1>Profile</h1>
     </div>
   )
 }

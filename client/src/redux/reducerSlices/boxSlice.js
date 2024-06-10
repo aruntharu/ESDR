@@ -42,7 +42,7 @@ const boxSlice = createSlice({
     shiftPosition(state,actions) {
       state.right = actions.payload
     },
-    shiftVertical(state,actions) {
+    shiftVertical(state,actions) {comm
       state.top = actions.payload
   },
   },
