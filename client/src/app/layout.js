@@ -3,6 +3,7 @@ import "./globals.css";
 import { NextUIProvider } from "@nextui-org/react";
 import ReduxProvider from "@/redux/ReduxProvider";
 import { Toaster } from "react-hot-toast";
+import CustomNavBar from "@/components/navbar/page";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -15,6 +16,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <NextUIProvider>
+          <CustomNavBar>
+          </CustomNavBar>
         <ReduxProvider>
             {children}
             <Toaster

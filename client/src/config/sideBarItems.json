@@ -5,7 +5,7 @@
     "user": [
         {"id":1, "name": "Dashboard", "link": "/dashboard"},
         {"id":1, "name": "Messages", "link": "/messages"},
-        {"id":1, "name": "Books", "link": "/books"},
+        {"id":1, "name": "Notices", "link": "/notice"},
         {"id":1, "name": "Articles", "link": "/articles"},
         {"id":1, "name": "Profile", "link": "/profile"}
     ]

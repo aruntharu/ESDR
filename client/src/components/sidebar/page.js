@@ -4,6 +4,7 @@ import { cn } from "@nextui-org/react";
 import { IoNewspaperOutline, IoSettingsOutline } from "react-icons/io5";
 import sideBarItems from '@/config/sideBarItems.json' ;
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 
 export const ItemCounter = ({ number }) => (
@@ -23,13 +24,15 @@ export const IconWrapper = ({ children, className }) => (
   </div>
 );
 export default function SideBar() {
+  const {userDetails
+  }=  useSelector(state=>state.user)
     console.log(sideBarItems)
     const router = useRouter()
-  return (
+    return (
     <Listbox
       aria-label="User Menu"
       onAction={(key) => router.push(key)}
-      className="h-screen p-0 gap-0 divide-y divide-default-300/50 dark:divide-default-100/80 bg-content1 max-w-[300px] overflow-visible shadow-small rounded-medium m-2"
+      className={`p-0 gap-0 divide-y divide-default-300/50 dark:divide-default-100/80 bg-content1 ${userDetails.role=='admin' ?'bg-[#034CAD]': 'bg-green-500' } max-w-[300px] overflow-visible shadow-small rounded-medium m-2`}
       itemClasses={{
         base: "px-3 first:rounded-t-medium last:rounded-b-medium rounded-none gap-3 h-12 data-[hover=true]:bg-default-100/80",
       }}
@@ -38,9 +41,8 @@ export default function SideBar() {
         return(
           <ListboxItem
           key={item.link}
-          endContent={<ItemCounter number={293} />}
           startContent={
-            <IconWrapper className="bg-secondary/10 text-secondary">
+            <IconWrapper className="bg-secondary/10 text-secondary bg-white">
               <IoNewspaperOutline />
             </IconWrapper>
           }

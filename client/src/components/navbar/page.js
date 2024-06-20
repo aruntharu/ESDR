@@ -1,92 +1,83 @@
-"use client";
-import React from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  Button,
-} from "@nextui-org/react";
-import Logo from "@/components/logo/page";
+'use client'
+import React from 'react'
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button} from "@nextui-org/react";
+import Image from 'next/image';
 
-const NavBar = () => {
+const CustomNavBar = () => {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const menuItems = [
+    "HOME",
+    "ABOUT US",
+    "COMMITTEE",
+    "NEWS & EVENTS",
+    "CONNECT WITH US",
+    "CONTACT US",
+  ];
+
   return (
-    <Navbar className="shadow-lg max-w-full flex justify-center  ">
-      <NavbarBrand>
-        <Logo />
-        <p className="font-bold text-inherit">Social Justice</p>
-      </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem isActive>
-          <Link
-            className="hover:bg-gray-400 rounded-lg p-1"
-            color="foreground"
-            href="./home"
-          >
-            Home
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link
-            className="hover:bg-gray-400 rounded-lg p-1"
-            color="foreground"
-            href="#"
-          >
-            About us
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link
-            className="hover:bg-gray-400 rounded-lg p-1"
-            color="foreground"
-            href="#"
-          >
-            News & Events
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link
-            className="hover:bg-gray-400 rounded-lg p-1"
-            color="foreground"
-            href="#"
-          >
-            Articles
-          </Link>
-        </NavbarItem>
-        
-        <NavbarItem isActive>
-          <Link
-            className="hover:bg-gray-400 rounded-lg p-1"
-            color="foreground"
-            href="#"
-          >
-            Publications
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link
-            className="hover:bg-gray-400 rounded-lg p-1"
-            color="foreground"
-            href="#"
-          >
-            About us
-          </Link>
-        </NavbarItem>
-        
+    <Navbar onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
+        <NavbarBrand>
+          <Image src="/logo.png" width={190} height={50} alt="logo" />
+        </NavbarBrand>
       </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="./login">Login</Link>
+
+      <NavbarContent className="hidden sm:flex gap-8" justify="center ">
+        <NavbarItem>
+          <Link color="foreground" href="/home">
+            HOME
+          </Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
+          <Link color="foreground" href="aboutus">
+            ABOUT US
+          </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/committee">
+            COMMITTEE
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="news">
+            NEWS & EVENTS
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/connectwithus">
+            CONNECT WITH US
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/contactus">
+            CONTACT US
+          </Link>
+        </NavbarItem>
+        
       </NavbarContent>
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item}-${index}`}>
+            <Link
+              color={
+                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
+              }
+              className="w-full"
+              href="#"
+              size="lg"
+            >
+              {item}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default CustomNavBar

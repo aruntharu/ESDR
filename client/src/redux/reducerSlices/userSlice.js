@@ -1,21 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-    width: 30,
-    height: 40,
-    backgroundColor: 'red'
- }
+const initialState = { 
+    isLoggedIn: false,
+    token: '',
+    userDetails: {}
+}
 
-const boxSlice = createSlice({
-  name: 'box',
-  initialState,
+const userSlice = createSlice({
+  name: 'user',
+  initialState: initialState,
   reducers: {
-    
-    increaseWidth(state) {
-      state.width = state.width + 1    },
-    
+    setLoginDetails(state, actions) {
+        const {user, token} = actions.payload
+       return {
+        ...state,
+        isLoggedIn: true,
+        token: token,
+        userDetails: user
+       }
+    },
+
+    logoutUser(state, actions) {
+           return initialState
+    }
   },
 })
 
-export const { increment, decrement, incrementByAmount } = boxSlice.actions
-export default boxSlice.reducer
+export const{ setLoginDetails, logoutUser } = userSlice.actions
+export default userSlice.reducer
