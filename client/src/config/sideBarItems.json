@@ -1,12 +1,16 @@
 {
-    "admin": {
+    "admin": [
+        {"id":1, "name": "Dashboard", "link": "/admin-dashboard"},
+        {"id":1, "name": "Verify KYC", "link": "/verify-kyc"},
+        {"id":1, "name": "Post", "link": "/add-news"},
+        {"id":1, "name": "Popup", "link": "/add-popup"}
 
-    },
+        
+    ],
     "user": [
         {"id":1, "name": "Dashboard", "link": "/dashboard"},
-        {"id":1, "name": "Messages", "link": "/messages"},
-        {"id":1, "name": "Notices", "link": "/notice"},
-        {"id":1, "name": "Articles", "link": "/articles"},
-        {"id":1, "name": "Profile", "link": "/profile"}
+        {"id":1, "name": "Notice", "link": "/notice"}
+        
+    
     ]
 }

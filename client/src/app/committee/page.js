@@ -1,9 +1,12 @@
 'use client'
+import CustomNavBar from '@/components/navbar/page'
 import React from 'react'
 
 const Committee = () => {
   return (
-    <div>Committee</div>
+    <div>
+      <CustomNavBar/>
+    </div>
   )
 }
 

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { setLoginDetails } from "@/redux/reducerSlices/userSlice";
 import { useDispatch } from "react-redux";
+import CustomNavBar from "@/components/navbar/page";
 
 
 export default function App() {
@@ -80,6 +81,7 @@ export default function App() {
 
   return (
     <div>
+      <CustomNavBar/>
     <div className="flex flex-col w-full">
       <Card className="flex self-center max-w-full w-[340px] ">
         <CardBody className="overflow-hidden">

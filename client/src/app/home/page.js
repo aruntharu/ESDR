@@ -1,7 +1,4 @@
 "use client";
-import Footer from "@/components/footer/page";
-import NavBar from "@/components/navbar/page";
-import News from "@/components/whoweare/page";
 import Heroimage from "@/components/heroimage/page";
 import WhoWeAre from "@/components/whoweare/page";
 import Thematicareas from "@/components/thematicareas/page";
@@ -17,6 +14,7 @@ import CustomNavBar from "@/components/navbar/page";
 const Home = () => {
   return (
     <div>
+      <CustomNavBar/>
       <Heroimage/>
       <WhoWeAre/>
       <Thematicareas/>
