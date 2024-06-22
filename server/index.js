@@ -1,28 +1,24 @@
-
 const express = require('express')
+
 const dbConnect = require('./src/db/connection')
+const userRoute = require('./src/routes/user')
+const newsRoute = require('./src/routes/news')
+
+const cors = require('cors');
+
 dbConnect()
 const app = express()
+
+app.use(cors())
 require('dotenv').config()
-const mongoose = require('mongoose')
-const { Schema } = mongoose;
-
-const bookSchema = new Schema({
-  Bookname: String, // String is shorthand for {type: String}
-  price: String,
-  body: String,
- 
-});
-const Book = mongoose.model('Book', bookSchema);
-
-const port = process.env.PORT
+//body parser
+app.use(express.json())
+app.use(userRoute)
+app.use(newsRoute)
 
 
-app.post('/books/', (req, res) => {
-  Book.create({Bookname:'ajia', price:'4000'})
-  
+const port = process.env.PORT || 8000
 
-})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
