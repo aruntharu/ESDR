@@ -16,7 +16,7 @@ const {addNews } = require('../controllers/news');
 
 router.post('/news', addNews)
 
-router.post('/news',upload.single('newsImage'),  addNews)
+router.post('/newsImage',upload.single('newsImage'),  addNews)
   
   module.exports = router
 
