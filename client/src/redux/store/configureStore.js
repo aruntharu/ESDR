@@ -10,6 +10,7 @@ const persistConfig = {
   }
   const rootReducer = combineReducers({ 
     user: userSlice,
+    
   })
 
   const persistedReducer = persistReducer(persistConfig, rootReducer)  

@@ -1,34 +1,55 @@
-
-import React from 'react'
+'use client'
+import CustomNavBar from '@/components/navbar/page'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 const News = () => {
+  const [newsList, setNewsList] = useState([])
+  useEffect(()=>{
+    fetchnewsList()
+  },[])
+  
+  const fetchnewsList= async()=>{
+    const {data} =await axios.get(`http://localhost:8000/news`)
+    setNewsList(data)
+  }
   return (
-    <div>
-    <section class="text-gray-600 body-font overflow-hidden">
-  <div class="container px-5 py-24 mx-auto">
-    <div class="-my-8 divide-y-2 divide-gray-100">
-      <div class="py-8 flex flex-wrap md:flex-nowrap">
-        <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-          <span class="font-semibold title-font text-gray-700">CATEGORY</span>
-          <span class="mt-1 text-gray-500 text-sm">12 Jun 2019</span>
-        </div>
-        <div class="md:flex-grow">
-          <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">Bitters hashtag waistcoat fashion axe chia unicorn</h2>
-          <p class="leading-relaxed">Glossier echo park pug, church-key sartorial biodiesel vexillologist pop-up snackwave ramps cornhole. Marfa 3 wolf moon party messenger bag selfies, poke vaporware kombucha lumbersexual pork belly polaroid hoodie portland craft beer.</p>
-          <a class="text-indigo-500 inline-flex items-center mt-4">Learn More
-            <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14"></path>
-              <path d="M12 5l7 7-7 7"></path>
-            </svg>
-          </a>
-        </div>
-      </div>
+ <div>
+  <CustomNavBar/>
+  {newsList.map((item)=>{
+      return (
+        <section>
+  <div class="relative">
+    <div class="relative flex justify-start">
+    </div>
+  </div>
+  <div class="space-y-8 lg:divide-y lg:divide-gray-100">
+    <div class="pt-8 sm:flex lg:items-end group">
+      <div class="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">
       
+
+
+      </div>
+      <div>
+        
+        <p class="mt-3 text-lg font-medium leading-6">
+          <a href="./blog-post.html" class="text-xl text-gray-800 group-hover:text-gray-500 lg:text-2xl">{item.newsHeading}</a>
+        </p>
+        <span class="pr-3 text-md font-medium text-neutral-600 bg-white">{item.newsIntro} </span>
+        <p class="text-sm text-gray-500">{item.newsDate}</p>
+        <p class="mt-2 text-lg text-gray-500">{item.newsDescription}</p>
+      </div>
+    </div>
+    <div class="pt-8 sm:flex lg:items-end group">
+      <div class="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">   
+      </div>
     </div>
   </div>
 </section>
-</div>
+      )
+  })}
+ </div>
   )
-}
-
+} 
+ 
 export default News
