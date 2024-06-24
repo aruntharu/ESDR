@@ -12,11 +12,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 const router = Router(); 
 
-const {addNews } = require('../controllers/news');
+const {addNews, getAllNews } = require('../controllers/news');
 
-router.post('/news', addNews)
+router.post('/news',upload.single('newsImage'),  addNews)
 
 router.post('/newsImage',upload.single('newsImage'),  addNews)
+
+router.get('/news', getAllNews)
+
+
   
   module.exports = router
 
