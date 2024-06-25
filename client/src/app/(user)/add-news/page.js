@@ -1,11 +1,20 @@
 'use client'
-import React,{ useState} from 'react';
+import React,{ useEffect, useState} from 'react';
 import { useFormik } from 'formik';
 import { Input, Radio, RadioGroup } from '@nextui-org/react';
-import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import axios from 'axios';
+import { BiTrash } from 'react-icons/bi';
 
 const page = () => {
+  const [newsList, setNewsList] = useState([])
+  useEffect(()=>{
+    fetchNews()
+  },[])
+  const fetchNews=async()=>{
+    const {data} = await axios.get('http://localhost:8000/news');
+    setNewsList(data)
+  }
   const newsDetails= [
     {name:'newsHeading', label:'News Heading'},
      {name:'newsIntro', label:'News Intro'}, 
@@ -26,8 +35,14 @@ const page = () => {
     },
   });
 
-  const submitNews = async(values) => {
+  const deleteItem =async(id)=>{
+    const {data} = await axios.delete('http://localhost:8000/news/'+id)
+    if(data){
+      fetchNews()
+    }
+  }
 
+  const submitNews = async(values) => {
     let formData = new FormData(); 
     formData.append('newsHeading', values.newsHeading); 
     formData.append('newsIntro', values.newsIntro);
@@ -45,32 +60,23 @@ const page = () => {
   const data = await response.json()
   if(data.msg){
     toast(data.msg)
+    fetchNews()
   }
   }
 
   const [image, setImage] = useState(null)
   return (
     <form className='m-4 flex flex-col border shadow-md rounded-lg p-4' onSubmit={formik.handleSubmit}>
+      {newsList.length> 0 && newsList.map((item)=>{
+        return(
+          <div className='p-2 m-2 shadow-lg'>{item.newsHeading}
+          <BiTrash onClick={()=>deleteItem(item._id)}/>
+          </div>
+          
+        )
+      })}
       <h1 className='text-4xl text-green-300'>Add News</h1>
      {newsDetails.map((item)=>{
-      if(item.type ==='radio'){
-        return (
-          <RadioGroup
-          label={item.label}
-          name={item.name}
-          type={item.type}
-          onChange={formik.handleChange}
-        >{
-          item.radioOption.map((val)=>{
-            return (
-              <Radio value={val}>{val}</Radio>
-            )
-          })
-        }
-       
-        </RadioGroup>
-        )
-      }
       return (
         <div>
            <label htmlFor={item.name}>{item.label}</label>
