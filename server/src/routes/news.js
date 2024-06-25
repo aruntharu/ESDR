@@ -16,12 +16,10 @@ const {addNews, getAllNews } = require('../controllers/news');
 
 router.post('/news',upload.single('newsImage'),  addNews)
 
-router.post('/newsImage',upload.single('newsImage'),  addNews)
-
 router.get('/news', getAllNews)
 
+router.delete('/news/:id', deleteNewsById)
 
-  
   module.exports = router
 
 

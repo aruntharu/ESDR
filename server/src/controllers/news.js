@@ -1,7 +1,7 @@
 const News = require("../models/news")
 
   const addNews = async (req,res)=>{
-    req.body.newsImage = req.file.filename
+    req.body.news = req.file.filename
    await News.create(req.body)
    return res.json({
     msg: 'News Added'
@@ -14,6 +14,10 @@ const News = require("../models/news")
    return res.json(newsList)
   }
 
+  const deleteNewsById = async (req,res)=>{
+    const newsList = await News.findByIdAndDelete(req.params.id)
+    return res.json(newsList)
+   }
   
 
-  module.exports = {addNews, getAllNews}
+  module.exports = {addNews, getAllNews, deleteNewsById}
