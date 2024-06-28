@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 const router = Router(); 
 
-const {addNews, getAllNews } = require('../controllers/news');
+const {addNews, getAllNews, deleteNewsById, getNewsDetailsById } = require('../controllers/news');
 
 router.post('/news',upload.single('newsImage'),  addNews)
 
@@ -20,6 +20,9 @@ router.get('/news', getAllNews)
 
 router.delete('/news/:id', deleteNewsById)
 
+router.get('/news/:id', getNewsDetailsById)
+
+    
   module.exports = router
 
 

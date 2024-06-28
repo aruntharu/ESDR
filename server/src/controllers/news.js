@@ -19,5 +19,16 @@ const News = require("../models/news")
     return res.json(newsList)
    }
   
+   const getNewsDetailsById = async (req,res)=>{
+    try{
+      const newsList = await News.findById(req.params.id)
+      return res.json(newsList)
+    }catch(err){
+      return res.json({
+        msg:"unable to fetch"
+      })
+    }
 
-  module.exports = {addNews, getAllNews, deleteNewsById}
+   }
+
+  module.exports = {addNews, getAllNews, deleteNewsById, getNewsDetailsById}
