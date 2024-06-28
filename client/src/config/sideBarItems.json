@@ -2,7 +2,9 @@
     "admin": [
         {"id":1, "name": "Dashboard", "link": "/admin-dashboard"},
         {"id":1, "name": "Verify KYC", "link": "/verify-kyc"},
-        {"id":1, "name": "News", "link": "/add-news"},
+        {"id":1, "name": "Message", "link": "/messagelist"},
+        {"id":1, "name": "Committee", "link": "/add-committee"},
+        {"id":1, "name": "News", "link": "/newslist"},
         {"id":1, "name": "Videos", "link": "/add-videos"},
         {"id":1, "name": "Popup", "link": "/add-popup"}
 
@@ -10,7 +12,7 @@
     ],
     "user": [
         {"id":1, "name": "Dashboard", "link": "/dashboard"},
-        {"id":1, "name": "Notice", "link": "/notice"}
+        {"id":1, "name": "Message", "link": "/message"}
         
     
     ]

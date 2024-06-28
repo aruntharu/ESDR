@@ -39,7 +39,7 @@ const layout = ({ children }) => {
       </div> 
       <div className="flex m-4">
         <div className="flex flex-col items-center">
-          <Image src="/logo.png" width={80} height={80} className="" />
+          <Image src="/logo.png" width={140} height={140} className="" />
 
           <SideBar />
         </div>

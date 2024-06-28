@@ -4,21 +4,20 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-const News = () => {
+const page = () => {
   const router = useRouter()
-  const [newsList, setNewsList] = useState([])
+  const [messageList, setmessageList] = useState([])
   useEffect(()=>{
-    fetchnewsList()
+    fetchmessageList()
   },[])
   
-  const fetchnewsList= async()=>{
-    const {data} =await axios.get(`http://localhost:8000/news`)
-    setNewsList(data)
+  const fetchmessageList= async()=>{
+    const {data} =await axios.get(`http://localhost:8000/message`)
+    setmessageList(data)
   }
   return (
  <div>
-  <CustomNavBar/>
-  {newsList.map((item)=>{
+  {messageList.map((item)=>{
       return (
         <section>
   <div class="relative">
@@ -32,14 +31,13 @@ const News = () => {
 
 
       </div>
-      <div onClick={()=>router.push('/news/'+item._id)}>
+      <div onClick={()=>router.push('/message/'+item._id)}>
         
         <p class="mt-3 text-lg font-medium leading-6">
-          <p class="text-xl text-gray-800 group-hover:text-gray-500 lg:text-2xl">{item.newsHeading}</p>
+          <p class="text-xl text-gray-800 group-hover:text-gray-500 lg:text-2xl">{item.messageHeading}</p>
         </p>
-        <span class="pr-3 text-md font-medium text-neutral-600 bg-white">{item.newsIntro} </span>
-        <p class="text-sm text-gray-500">{item.newsDate}</p>
-        <p class="mt-2 text-lg text-gray-500">{item.newsDescription}</p>
+        <span class="pr-3 text-md font-medium text-neutral-600 bg-white">{item.senderName} </span>
+        <p class="text-sm text-gray-500">{item.messageDate}</p>
       </div>
     </div>
     <div class="pt-8 sm:flex lg:items-end group">
@@ -54,4 +52,4 @@ const News = () => {
   )
 } 
  
-export default News
+export default page

@@ -2,7 +2,7 @@
 import CustomNavBar from '@/components/navbar/page'
 import React from 'react'
 
-const Committee = () => {
+const page = () => {
   return (
     <div>
       <CustomNavBar/>
@@ -10,4 +10,4 @@ const Committee = () => {
   )
 }
 
-export default Committee
+export default page

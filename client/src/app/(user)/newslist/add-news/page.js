@@ -1,20 +1,13 @@
 'use client'
-import React,{ useEffect, useState} from 'react';
+import React,{useState} from 'react';
 import { useFormik } from 'formik';
-import { Input, Radio, RadioGroup } from '@nextui-org/react';
+import { Input} from '@nextui-org/react';
 import toast from 'react-hot-toast';
-import axios from 'axios';
-import { BiTrash } from 'react-icons/bi';
+import { FaBackspace } from "react-icons/fa";
+import {Button} from "@nextui-org/react";
+import Link from 'next/link';
 
 const page = () => {
-  const [newsList, setNewsList] = useState([])
-  useEffect(()=>{
-    fetchNews()
-  },[])
-  const fetchNews=async()=>{
-    const {data} = await axios.get('http://localhost:8000/news');
-    setNewsList(data)
-  }
   const newsDetails= [
     {name:'newsHeading', label:'News Heading'},
      {name:'newsIntro', label:'News Intro'}, 
@@ -35,13 +28,6 @@ const page = () => {
     },
   });
 
-  const deleteItem =async(id)=>{
-    const {data} = await axios.delete('http://localhost:8000/news/'+id)
-    if(data){
-      fetchNews()
-    }
-  }
-
   const submitNews = async(values) => {
     let formData = new FormData(); 
     formData.append('newsHeading', values.newsHeading); 
@@ -60,21 +46,13 @@ const page = () => {
   const data = await response.json()
   if(data.msg){
     toast(data.msg)
-    fetchNews()
   }
   }
 
   const [image, setImage] = useState(null)
   return (
     <form className='m-4 flex flex-col border shadow-md rounded-lg p-4' onSubmit={formik.handleSubmit}>
-      {newsList.length> 0 && newsList.map((item)=>{
-        return(
-          <div className='p-2 m-2 shadow-lg'>{item.newsHeading}
-          <BiTrash onClick={()=>deleteItem(item._id)}/>
-          </div>
-          
-        )
-      })}
+      <div className='flex' ><Link href="/newslist"><FaBackspace className='size-6 mr-1'/></Link><p className='flex'>Back</p></div>
       <h1 className='text-4xl text-green-300'>Add News</h1>
      {newsDetails.map((item)=>{
       return (
@@ -93,12 +71,12 @@ const page = () => {
 
      <input  type="file" onChange={(e)=>setImage(e.target.files[0])}/>
       
-
      
-      <button className='bg-green-500 text-white rounded p-2 my-4 w-[20%]' type="submit">Submit</button>
+      <div className='flex'>
+      <Button color="success" className='p-2 my-4 mr-4 w-[10%] flex' type="submit" >Submit</Button>
+      </div>
     </form>
   );
 };
-
 
 export default page

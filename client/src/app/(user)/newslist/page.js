@@ -1,63 +1,73 @@
-"use client";
-
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+'use client'
+import React,{ useEffect, useState} from 'react';
+import axios from 'axios';
+import { BiTrash } from 'react-icons/bi';
+import { FiFilePlus } from "react-icons/fi";
+import { useRouter } from 'next/navigation';
 
 const page = () => {
-  useEffect(() => {
-    getKycList()
-  }, []);
-    const [kycList, setKycList] = useState([])
-  const getKycList = async ()=> {
-   const {data} =await axios.get(`http://localhost:8000/user-kyc`)
-   setKycList(data)
+    const router = useRouter()
+  const [newsList, setNewsList] = useState([])
+  useEffect(()=>{
+    fetchNews()
+  },[])
+  const fetchNews=async()=>{
+    const {data} = await axios.get('http://localhost:8000/news');
+    setNewsList(data)
   }
-   return (
-   <div className="mx-10">
-        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+  
+
+  const deleteItem =async(id)=>{
+    const {data} = await axios.delete('http://localhost:8000/news/'+id)
+    if(data){
+      fetchNews()
+    }
+  }
+
+
+  const [image, setImage] = useState(null)
+  return (
+    <div className="mx-10">
+      <div className='flex' onClick={()=>router.push('/newslist/add-news')}><p className='flex'> <FiFilePlus className='size-6' />Add News</p></div>
+        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto ">
         <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
             <table className="min-w-full leading-normal">
                 <thead>
                     <tr>
                         <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          Fathers Name
+                          News Heading
                         </th>
                         <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             Date
                         </th>
                         <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                            Amount
+                            Image
                         </th>
                         <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                            KYC status
+                            Action
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                {kycList.length> 0 && kycList.map((item)=>{
+                {newsList.length> 0 && newsList.map((item)=>{
                return( <tr>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <div className="flex items-center">
-                                <div className="flex-shrink-0 w-10 h-10">
-                                    <img className="w-full h-full rounded-full"
-                                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                                        alt="" />
-                                </div>
                                     <div className="ml-3">
                                         <p className="text-gray-900 whitespace-no-wrap">
-                                            {item.fathersName}
+                                            {item.newsHeading}
                                         </p>
                                     </div>
                                 </div>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p className="text-gray-900 whitespace-no-wrap">
-                                Jan 21, 2020
+                                {item.newsDate}
                             </p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p className="text-gray-900 whitespace-no-wrap">
-                            {item.fullName}
+                            image
                             </p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -66,7 +76,7 @@ const page = () => {
                                 <span aria-hidden
                                     className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
                             <span className="relative">
-                            {item.kycVerifiedStatus}
+                            <BiTrash onClick={()=>deleteItem(item._id)}/>
                             </span>
                             </span>
                         </td>
@@ -80,4 +90,6 @@ const page = () => {
    </div>);
 };
 
-export default page;
+
+
+export default page
