@@ -1,7 +1,8 @@
 'use client'
 import React from 'react'
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button} from "@nextui-org/react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem} from "@nextui-org/react";
 import Image from 'next/image';
+import Link from 'next/link';
 
 const CustomNavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);

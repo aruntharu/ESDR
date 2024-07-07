@@ -3,6 +3,7 @@ import CustomNavBar from '@/components/navbar/page'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import {Button} from "@nextui-org/react";
 
 const News = () => {
   const router = useRouter()
@@ -20,34 +21,23 @@ const News = () => {
   <CustomNavBar/>
   {newsList.map((item)=>{
       return (
-        <section>
-  <div class="relative">
-    <div class="relative flex justify-start">
-    </div>
-  </div>
-  <div class="space-y-8 lg:divide-y lg:divide-gray-100">
-    <div class="pt-8 sm:flex lg:items-end group">
-      <div class="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">
-      
+        <section className="text-gray-600 body-font overflow-hidden">
+        <div className="container px-10 py-10 mx-auto">
+          <div className="-my-8 divide-y-2 divide-gray-100">
+            <div className="py-8 flex flex-wrap md:flex-nowrap">
 
-
-      </div>
-      <div onClick={()=>router.push('/news/'+item._id)}>
-        
-        <p class="mt-3 text-lg font-medium leading-6">
-          <p class="text-xl text-gray-800 group-hover:text-gray-500 lg:text-2xl">{item.newsHeading}</p>
-        </p>
-        <span class="pr-3 text-md font-medium text-neutral-600 bg-white">{item.newsIntro} </span>
-        <p class="text-sm text-gray-500">{item.newsDate}</p>
-        <p class="mt-2 text-lg text-gray-500">{item.newsDescription}</p>
-      </div>
-    </div>
-    <div class="pt-8 sm:flex lg:items-end group">
-      <div class="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">   
-      </div>
-    </div>
-  </div>
-</section>
+              <div className="md:flex-grow">
+                <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">{item.newsHeading}</h2>
+                <p className="mt-1 text-gray-500 text-sm ">12 Jun 2019</p>
+                <p className="leading-relaxed mb-4 ">{item.newsDescription.slice(0,350)+'.......'}</p>
+                <Button onClick={()=> router.push('/news/'+item._id)} color="primary">Read More</Button>
+              </div>
+            </div>
+            <div className="flex flex-wrap md:flex-nowrap">
+            </div>
+          </div>
+        </div>
+      </section>
       )
   })}
  </div>

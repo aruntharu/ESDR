@@ -3,10 +3,11 @@
         {"id":1, "name": "Dashboard", "link": "/admin-dashboard"},
         {"id":1, "name": "Verify KYC", "link": "/verify-kyc"},
         {"id":1, "name": "Message", "link": "/messagelist"},
-        {"id":1, "name": "Committee", "link": "/add-committee"},
+        {"id":1, "name": "Committee", "link": "/committeelist"},
         {"id":1, "name": "News", "link": "/newslist"},
         {"id":1, "name": "Videos", "link": "/add-videos"},
-        {"id":1, "name": "Popup", "link": "/add-popup"}
+        {"id":1, "name": "Popup", "link": "/add-popup"},
+        {"id":1, "name": "Contact Us", "link": "/contact"}
 
         
     ],
