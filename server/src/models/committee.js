@@ -4,9 +4,9 @@ const { Schema } = mongoose;
 const committeeSchema = new Schema({
   fullName: String, // String is shorthand for {type: String}
   designation: String,
-  personDescription: String,
-  personImage: String, 
+  personDescripton: String,
+  committeeImage: String, 
 });
-const News = mongoose.model('Committee', committeeSchema);
+const Committee = mongoose.model('Committee', committeeSchema);
 module.exports= Committee
 

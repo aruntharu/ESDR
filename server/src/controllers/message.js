@@ -1,7 +1,6 @@
 const Message = require("../models/message")
 
   const addMessage = async (req,res)=>{
-    req.body.message = req.file.filename
    await Message.create(req.body)
    return res.json({
     msg: 'Message Sent'
