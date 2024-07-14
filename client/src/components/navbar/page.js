@@ -8,12 +8,12 @@ const CustomNavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = [
-    "HOME",
-    "ABOUT US",
-    "COMMITTEE",
-    "NEWS & EVENTS",
-    "CONNECT WITH US",
-    "CONTACT US",
+    { id: 1, name: "Home", link: "/home" },
+    { id: 2, name: "About Us", link: "/aboutus" },
+    { id: 3, name: "Committee", link: "/committee" },
+    { id: 4, name: "News & Events", link: "/news" },
+    { id: 5, name: "Connect With Us", link: "/connectwithus" },
+    { id: 6, name: "Contact Us", link: "/contactus" },
   ];
 
   return (
@@ -35,7 +35,7 @@ const CustomNavBar = () => {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="aboutus">
+          <Link color="foreground" href="/aboutus">
             ABOUT US
           </Link>
         </NavbarItem>
@@ -69,10 +69,10 @@ const CustomNavBar = () => {
                 index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
               }
               className="w-full"
-              href="#"
+              href={item.link}
               size="lg"
             >
-              {item}
+              {item.name}
             </Link>
           </NavbarMenuItem>
         ))}

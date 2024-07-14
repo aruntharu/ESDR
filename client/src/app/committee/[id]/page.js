@@ -16,7 +16,7 @@ const PersonDetails = ({params}) => {
   },[])
 
   const fetchPersonDetails =async()=> {
-    const {data} =await axios.get(`http://localhost:8000/committee/${params.id}`)
+    const {data} =await axios.get(`${process.env.NEXT_PUBLIC_API_URL}committee/${params.id}`)
     setPersonDetails(data)
   }
   return (
@@ -26,7 +26,7 @@ const PersonDetails = ({params}) => {
         <p className='text-3xl m-2 text-black'>{personDetails?.committeeImage}</p>
         <p className='text-3xl m-2 text-black'>{personDetails?.fullName}</p>
         <p className='text-3xl m-2 text-black'>{personDetails?.designation}</p>
-        <p className='text-3xl m-2 text-black'>{personDetails?.personDescripton}</p>
+        <p className='text-3xl m-2 text-black'>{personDetails?.personDescription}</p>
 
     </div>
     </div>

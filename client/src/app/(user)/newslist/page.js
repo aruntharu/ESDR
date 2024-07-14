@@ -12,13 +12,13 @@ const page = () => {
     fetchNews()
   },[])
   const fetchNews=async()=>{
-    const {data} = await axios.get('http://localhost:8000/news');
+    const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}news`);
     setNewsList(data)
   }
   
 
   const deleteItem =async(id)=>{
-    const {data} = await axios.delete('http://localhost:8000/news/'+id)
+    const {data} = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}news/`+id)
     if(data){
       fetchNews()
     }

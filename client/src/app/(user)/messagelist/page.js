@@ -12,13 +12,13 @@ const page = () => {
     fetchMessage()
   },[])
   const fetchMessage=async()=>{
-    const {data} = await axios.get('http://localhost:8000/message');
+    const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}message`);
     setMessageList(data)
   }
   
 
   const deleteItem =async(id)=>{
-    const {data} = await axios.delete('http://localhost:8000/message/'+id)
+    const {data} = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}message/`+id)
     if(data){
       fetchMessage()
     }

@@ -6,14 +6,14 @@
         {"id":1, "name": "Committee", "link": "/committeelist"},
         {"id":1, "name": "News", "link": "/newslist"},
         {"id":1, "name": "Videos", "link": "/add-videos"},
-        {"id":1, "name": "Popup", "link": "/add-popup"},
-        {"id":1, "name": "Contact Us", "link": "/contact"}
+        {"id":1, "name": "Contact Us", "link": "/contact"},
+        {"id":1, "name": "Notice", "link": "/add-notice"}
 
         
     ],
     "user": [
         {"id":1, "name": "Dashboard", "link": "/dashboard"},
-        {"id":1, "name": "Message", "link": "/message"}
+        {"id":1, "name": "Notice", "link": "/notice"}
         
     
     ]

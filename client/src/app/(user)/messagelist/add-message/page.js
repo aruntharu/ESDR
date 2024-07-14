@@ -42,7 +42,7 @@ const page = () => {
       method: 'POST',
       body: formData
   };
-  const response = await fetch('http://localhost:8000/message', requestOptions);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}message`, requestOptions);
   const data = await response.json()
   if(data.msg){
     toast(data.msg)

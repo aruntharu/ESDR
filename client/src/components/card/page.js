@@ -15,8 +15,10 @@ export default function CommitteeCard(props) {
           src="https://nextui.org/images/hero-card-complete.jpeg"
           width={270}
         />
+ 
       </CardBody>
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+        
       <h4 className="font-bold text-large">{props.item.fullName}</h4>
         <small className="text-default-500">{props.item.designation}</small>
       </CardHeader>

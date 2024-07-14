@@ -39,7 +39,7 @@ const page = () => {
       method: 'POST',
       body: formData
   };
-  const response = await fetch('http://localhost:8000/contact', requestOptions);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}contact`, requestOptions);
   const data = await response.json()
   if(data.msg){
     toast(data.msg)

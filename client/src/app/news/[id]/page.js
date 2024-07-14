@@ -1,7 +1,9 @@
 'use client'
 import CustomNavBar from '@/components/navbar/page'
+import { Image } from '@nextui-org/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+
 
 const NewsDetails = ({params}) => {
     const [newsDetails, setNewsList] = useState([])
@@ -13,7 +15,7 @@ const NewsDetails = ({params}) => {
     },[])
     
     const  fetchnewsDetails= async()=>{
-      const {data} =await axios.get(`http://localhost:8000/news/${params.id}`)
+      const {data} =await axios.get(`${process.env.NEXT_PUBLIC_API_URL}news/${params.id}`)
       setNewsList(data)
     }
   return (
@@ -28,8 +30,9 @@ const NewsDetails = ({params}) => {
               <div className="md:flex-grow">
                 <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">{newsDetails?.newsHeading}</h2>
                 <p className="text-xl text-gray-900 title-font mb-2">{newsDetails?.newsIntro}</p>
+                <Image src={`${process.env.NEXT_PUBLIC_API_URL}news-image/${newsDetails.newsImage}`} width={100} height={100}/>
                 <p className="mt-1 text-gray-500 text-sm mb-4 ">{newsDetails?.newsDate}</p>
-                <p className="leading-relaxed ">{newsDetails?.newsDescription}</p>
+                <p className="leading-relaxed text-justify ">{newsDetails?.newsDescription}</p>
               </div>
             </div>
           </div>

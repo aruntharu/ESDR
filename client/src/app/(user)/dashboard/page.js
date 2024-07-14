@@ -11,7 +11,7 @@ const page = () => {
   }, []);
   
   const checkKycStatus = async ()=> {
-   const {data} =await axios.get(`http://localhost:8000/kyc-status/${userDetails._id}`)
+   const {data} =await axios.get(`${process.env.NEXT_PUBLIC_API_URL}kyc-status/${userDetails._id}`)
     dispatch(setUserKycVerifiedStatus(data.kycVerifiedStatus))
   }
   const { userDetails } = useSelector((state) => state.user);

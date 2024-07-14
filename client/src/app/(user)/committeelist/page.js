@@ -12,13 +12,13 @@ const page = () => {
     fetchCommittee()
   },[])
   const fetchCommittee=async()=>{
-    const {data} = await axios.get('http://localhost:8000/committee');
+    const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}committee`);
     setCommitteeList(data)
   }
   
 
   const deleteItem =async(id)=>{
-    const {data} = await axios.delete('http://localhost:8000/committee/'+id)
+    const {data} = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}committee/`+id)
     if(data){
       fetchCommittee()
     }

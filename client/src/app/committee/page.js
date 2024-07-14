@@ -3,7 +3,7 @@ import CommitteeCard from '@/components/card/page'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import CustomNavBar from '@/components/navbar/page'
-import { useRouter } from 'next/navigation'
+
 
 
 const page = () => {
@@ -16,13 +16,13 @@ const page = () => {
   },[])
 
   const fetchCommitteeList =async()=> {
-    const {data} =await axios.get(`http://localhost:8000/committee`)
+    const {data} =await axios.get(`${process.env.NEXT_PUBLIC_API_URL}committee`)
     setCommitteeList(data)
   }
   return (
     <div>
        <CustomNavBar/>
-        <div className='flex justify-center'>
+        <div className='flex justify-center '>
         {committeeList.map((item)=>{
           return <CommitteeCard item={item}/>
         })}

@@ -3,7 +3,7 @@ import CustomNavBar from '@/components/navbar/page'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import {Button} from "@nextui-org/react";
+import {Button, Image} from "@nextui-org/react";
 
 const News = () => {
   const router = useRouter()
@@ -13,7 +13,7 @@ const News = () => {
   },[])
   
   const fetchnewsList= async()=>{
-    const {data} =await axios.get(`http://localhost:8000/news`)
+    const {data} =await axios.get(`${process.env.NEXT_PUBLIC_API_URL}news`)
     setNewsList(data)
   }
   return (
@@ -28,8 +28,9 @@ const News = () => {
 
               <div className="md:flex-grow">
                 <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">{item.newsHeading}</h2>
+                <Image src={`${process.env.NEXT_PUBLIC_API_URL}news-image/${item.newsImage}`} width={100} height={100}/>
                 <p className="mt-1 text-gray-500 text-sm ">12 Jun 2019</p>
-                <p className="leading-relaxed mb-4 ">{item.newsDescription.slice(0,350)+'.......'}</p>
+                <p className="leading-relaxed mb-4 text-justify ">{item.newsDescription.slice(0,350)+'.......'}</p>
                 <Button onClick={()=> router.push('/news/'+item._id)} color="primary">Read More</Button>
               </div>
             </div>
