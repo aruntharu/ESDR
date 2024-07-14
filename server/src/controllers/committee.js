@@ -1,6 +1,7 @@
 const Committee = require("../models/committee")
 
   const addCommittee = async (req,res)=>{
+    req.body.personPhoto= req.file.filename
    await Committee.create(req.body)
    return res.json({
     msg: 'Committee Added'
