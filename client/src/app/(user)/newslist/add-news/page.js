@@ -7,7 +7,6 @@ import { FaBackspace } from "react-icons/fa";
 import { Button } from "@nextui-org/react";
 import Link from 'next/link';
 import JoditEditor from "jodit-react";
-import axios from "axios";
 
 const Page = () => {
   const [image, setImage] = useState(null);

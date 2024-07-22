@@ -4,6 +4,7 @@
         {"id":1, "name": "Verify KYC", "link": "/verify-kyc"},
         {"id":1, "name": "Message", "link": "/messagelist"},
         {"id":1, "name": "Committee", "link": "/committeelist"},
+        {"id":1, "name": "ESDR", "link": "/esdrlist"},
         {"id":1, "name": "News", "link": "/newslist"},
         {"id":1, "name": "Videos", "link": "/add-videos"},
         {"id":1, "name": "Contact Us", "link": "/contact"},

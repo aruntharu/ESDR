@@ -1,0 +1,34 @@
+/* CustomPrograms.css */
+
+.card {
+    position: relative;
+    overflow: hidden;
+    width: 340; /* Increased card width */
+    height: 403px; /* Increased card height */
+    border-radius: 0.75rem; /* Rounded borders */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Add a larger shadow */
+    margin: 25px; /* Add space between cards */
+  }
+  
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #83b3c3; /*Curtain color */
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1;
+  }
+  
+  .card:hover::before {
+    transform: translateY(0);
+  }
+  
+  .card > * {
+    position: relative;
+    z-index: 2;
+  }
+  

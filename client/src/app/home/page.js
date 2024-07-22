@@ -1,27 +1,25 @@
-"use client";
-import Heroimage from "@/components/heroimage/page";
-import WhoWeAre from "@/components/whoweare/page";
-import Thematicareas from "@/components/thematicareas/page";
-import CustomFooter from "@/components/footer/page";
-
-import Videos from "@/components/videos/page";
-import CoreObjectives from "@/components/coreobjectives/page";
-import CustomNavBar from "@/components/navbar/page";
-
-
-
+'use client';
+import React from 'react';
+import CustomNavBar from '@/components/navbar/page';
+import CustomCarousel from '@/components/carousel/page';
+import CustomAboutUs from '@/components/about/page';
+import CustomPrograms from '@/components/programs/page';
+import ScrollToTop from '@/components/scrollToTop/page';
+import Footer from '@/components/footer/page';
+import FactSection from '@/components/fact/page';
 
 const Home = () => {
   return (
     <div>
-      <CustomNavBar/>
-      <Heroimage/>
-      <WhoWeAre/>
-      <Thematicareas/>
-      <CoreObjectives/>
-      <Videos/>
-      <CustomFooter/>
+      <CustomNavBar />
+      <CustomCarousel />
+      <CustomAboutUs />
+      <FactSection/>
+      <CustomPrograms />  
+      <Footer/>
+      <ScrollToTop />
     </div>
   );
 };
+
 export default Home;

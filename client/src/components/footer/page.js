@@ -1,112 +1,72 @@
-'use client'
-import React from 'react'
-import { FaFacebookF } from "react-icons/fa";
-import { AiOutlineTwitter, AiFillYoutube } from "react-icons/ai";
-import { BiLogoPinterestAlt } from "react-icons/bi";
+'use client';
+import React, { useEffect, useState } from 'react';
+import AOS from 'aos';
+import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import Link from 'next/link';
+import Image from 'next/image';
+import 'aos/dist/aos.css';
 
-const CustomFooter = () => {
-  const iconsTab = [
-    { icon: <FaFacebookF /> },
-    { icon: <AiOutlineTwitter /> },
-    { icon: <AiFillYoutube /> },
-    { icon: <BiLogoPinterestAlt /> },
-  ];
+const Footer = () => {
+  const [isAOSInitialized, setIsAOSInitialized] = useState(false);
+
+  useEffect(() => {
+    if (!isAOSInitialized) {
+      AOS.init({ duration: 1000, once: true }); // 'once: true' ensures animation happens only once
+      setIsAOSInitialized(true);
+    }
+  }, [isAOSInitialized]);
+
   return (
-    <div>
-      <footer className="bg-[#005963]">
-        <div className="container mx-auto  py-[10rem]">
-          {/* footer div all */}
-          <div className="flex justify-between flex-col md:flex-row  items-center md:items-start  md:gap-[5rem] text-left">
-            {/* logo side */}
-            <div className="flex flex-col w-1/2 md:p-0 py-4 gap-8">
-              <img
-                src={"/logo.png"}
-                alt="footer_logo"
-                className="w-[18rem]"
-              />
-              <p className="text-[15px] font-medium text-[#646464]">
-                Take your health and body to the next level with our
-                comprehensive program designed to help you reach your fitness
-                goals.
-              </p>
-              {/* socials */}
-              <div className="flex gap-7 text-[18px] text-[#646464] justify-center md:justify-start">
-                {iconsTab.map(({ icon }, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="text-2xl bg-[#efefef] p-2 rounded-full hover:bg-[#ff0366] hover:text-white"
-                      style={{ transition: "all 0.3s" }}
-                    >
-                      {icon}
-                    </div>
-                  );
-                })}
-              </div>
-              <p className="text-[16px] font-medium text-[#646464]">
-                Privacy Policy | © {new Date().getFullYear()} Gymate <br />{" "}
-                Design by{" "}
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href="https://www.radiustheme.com/"
-                >
-                  RadiusTheme
-                </a>
-              </p>
-            </div>
-
-            {/* middle div */}
-            <div className="flex flex-col gap-8 relative">
-              <p className="text-[22px] font-bold footer-main">Our Classes</p>
-
-              <span className="top-[33px] absolute w-[7rem] h-[4px] bg-[#ff0366]"></span>
-
-              <p className="text-[16px] hover:text-[#ff0366] cursor-pointer text-[#646464] font-medium hover:font-bold">
-                Fitness Classes
-              </p>
-              <p className="text-[16px] hover:text-[#ff0366] cursor-pointer text-[#646464] font-medium hover:font-bold">
-                Aerobics Classes
-              </p>
-              <p className="text-[16px] hover:text-[#ff0366] cursor-pointer text-[#646464] font-medium hover:font-bold">
-                Power Yoga
-              </p>
-              <p className="text-[16px] hover:text-[#ff0366] cursor-pointer text-[#646464] font-medium hover:font-bold">
-                Learn Machines
-              </p>
-              <p className="text-[16px] hover:text-[#ff0366] cursor-pointer text-[#646464] font-medium hover:font-bold">
-                Full-body Strength
-              </p>
-            </div>
-
-            {/* right div */}
-            <div className="flex flex-col gap-8 relative">
-              <p className="text-[22px] font-bold footer-main">Working Hours</p>
-
-              <span className="top-[33px] absolute w-[7rem] h-[4px] bg-[#ff0366]"></span>
-
-              <p className="text-[16px]  text-[#646464] font-bold">
-                Monday - Friday:
-              </p>
-              <p className="text-[16px] text-[#646464] font-medium">
-                7:00am - 21:00pm
-              </p>
-              <p className="text-[16px] text-[#646464] font-bold">Saturday:</p>
-              <p className="text-[16px] text-[#646464] font-medium">
-                7:00am - 19:00pm
-              </p>
-              <p className="text-[16px] text-[#646464] font-bold ">
-                Sunday - Closed
-              </p>
-            </div>
-
-            {/* middle div */}
-            <span></span>
+    <footer className="bg-[#4299e1] text-white py-10" data-aos="fade-up">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-20">
+        <div data-aos="fade-up" data-aos-delay="200">
+          <Image src="/logo1.png" width={120} height={90} alt="logo" />
+          <p className="mt-4 text-white">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta facere delectus qui placeat inventore consectetur repellendus optio debitis.
+          </p>
+          <div className="flex space-x-4 mt-4">
+            <Link href="https://twitter.com">
+              <FaTwitter className="text-2xl text-white hover:text-[#2c6abf]" />
+            </Link>
+            <Link href="https://facebook.com">
+              <FaFacebookF className="text-2xl text-white hover:text-[#2c6abf]" />
+            </Link>
+            <Link href="https://instagram.com">
+              <FaInstagram className="text-2xl text-white hover:text-[#2c6abf]" />
+            </Link>
+            <Link href="https://linkedin.com">
+              <FaLinkedinIn className="text-2xl text-white hover:text-[#2c6abf]" />
+            </Link>
           </div>
         </div>
-      </footer>
-    </div>
-  )
-}
+        <div className="mx-auto" data-aos="fade-up" data-aos-delay="400">
+          <h2 className="text-xl font-bold text-white">Short Link</h2>
+          <ul className="mt-4 space-y-2">
+            <li><Link href="/about" className="hover:text-[#2c6abf]">About us</Link></li>
+            <li><Link href="/contact" className="hover:text-[#2c6abf]">Contact us</Link></li>
+            <li><Link href="/services" className="hover:text-[#2c6abf]">Our Services</Link></li>
+            <li><Link href="/projects" className="hover:text-[#2c6abf]">Our Projects</Link></li>
+            <li><Link href="/blog" className="hover:text-[#2c6abf]">Latest Blog</Link></li>
+            <li><Link href="/terms" className="hover:text-[#2c6abf]">Terms Of use</Link></li>
+            <li><Link href="/privacy" className="hover:text-[#2c6abf]">Privacy Policy</Link></li>
+            <li><Link href="/faqs" className="hover:text-[#2c6abf]">FAQs</Link></li>
+          </ul>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="600">
+          <h2 className="text-xl font-bold text-white">Contact Us</h2>
+          <ul className="mt-4 space-y-2">
+            <li>Suryabinayak- 04, Bhaktapur, Bagmati, Nepal</li>
+            <li>01-6634455, 01-6634663</li>
+            <li>esdr@ksl.edu.np</li>
+          </ul>
+        </div>
+      </div>
+      <div className="border-t border-white mt-10 pt-6 text-center text-white" data-aos="fade-up" data-aos-delay="800">
+        <p>Copyright © Kathmandu School of Law 2024. All rights reserved.</p>
+        <p>Designed By Arun Kumar Chaudhary</p>
+      </div>
+    </footer>
+  );
+};
 
-export default CustomFooter
+export default Footer;
