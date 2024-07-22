@@ -27,7 +27,7 @@ const layout = ({ children }) => {
     if(kycVerifiedStatus=== 'unVerified'){
        return <p className='p-2 bg-orange-100 rounded-lg text-md'> ⚠️ User KYC is not verified. <Link href="/user-kyc">Verify Now</Link> </p>
     }else if(kycVerifiedStatus === 'pending'){
-      return <p className='p-2 bg-orange-100 rounded-lg text-md'> User KYC is submitted. Please wait for Admin Approval </p>
+      return <p className='p-2 bg-orange-100 rounded-lg text-md'>Submitted<Link href="/user-kyc">Edit Now</Link> </p>
     }else if(kycVerifiedStatus === 'rejected'){
       return <p className='p-2 bg-orange-100 rounded-lg text-md'> Your KYC was rejected. <Link href="/user-kyc">Re-submit Now</Link> </p>
     }
