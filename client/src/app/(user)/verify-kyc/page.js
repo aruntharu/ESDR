@@ -120,39 +120,57 @@ const Page = () => {
       </div>
       {selectedUser && (
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-col gap-1">{selectedUser.userId}'s KYC Details</ModalHeader>
-                <ModalBody>
-                  <p>Full Name: {selectedUser.fullName}</p>
-                  <p>Date of Birth: {selectedUser.dob}</p>
-                  <p>Citizenship Number: {selectedUser.citizenshipNumber}</p>
-                  <p>Permanent Address: {selectedUser.permanentAddress}</p>
-                  <p>Temporary Address: {selectedUser.temporaryAddress}</p>
-                  <p>Pan Number: {selectedUser.panNumber}</p>
-                  <p>Email: {selectedUser.email}</p>
-                  <p>Phone Number: {selectedUser.phoneNumber}</p>
-                  <p>Verification Front Image</p>
-                  <img onClick={()=>{window.open(`${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoFront}`, '_blank').focus();}} src={`${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoFront}`}></img>
-                  <p>Verification Back Image</p>
-                  <img onClick={()=>{window.open(`${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoBack}`, '_blank').focus();}} src={`${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoBack}`}></img>
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
-                    Close
-                  </Button>
-                  <Button color="success" onPress={() => handleApprove(selectedUser.userId)}>
-                    Approve
-                  </Button>
-                  <Button color="danger" onPress={() => handleReject(selectedUser.userId)}>
-                    Reject
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                {selectedUser.userId}'s KYC Details
+              </ModalHeader>
+              <ModalBody style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+                <p>Full Name: {selectedUser.fullName}</p>
+                <p>Date of Birth: {selectedUser.dob}</p>
+                <p>Citizenship Number: {selectedUser.citizenshipNumber}</p>
+                <p>Citizenship Number: {selectedUser.citizenshipNumber}</p>
+                <p>Permanent Address: {selectedUser.permanentAddress}</p>
+                <p>Temporary Address: {selectedUser.temporaryAddress}</p>
+                <p>Email: {selectedUser.email}</p>
+                <p>Phone Number: {selectedUser.phoneNumber}</p>
+                <p>Verification Front Image</p>
+                <img
+                  onClick={() => {
+                    window.open(
+                      `${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoFront}`,
+                      '_blank'
+                    ).focus();
+                  }}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoFront}`}
+                />
+                <p>Verification Back Image</p>
+                <img
+                  onClick={() => {
+                    window.open(
+                      `${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoBack}`,
+                      '_blank'
+                    ).focus();
+                  }}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoBack}`}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="success" onPress={() => handleApprove(selectedUser.userId)}>
+                  Approve
+                </Button>
+                <Button color="danger" onPress={() => handleReject(selectedUser.userId)}>
+                  Reject
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       )}
     </div>
   );

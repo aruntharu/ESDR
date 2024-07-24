@@ -6,6 +6,7 @@ const committeeSchema = new Schema({
   designation: String,
   personDescription: String,
   personPhoto: String, 
+  serialNumber: Number,
 });
 const Committee = mongoose.model('Committee', committeeSchema);
 module.exports= Committee

@@ -1,11 +1,11 @@
 'use client';
-import CommitteeCard from '@/components/card/page';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import CustomNavBar from '@/components/navbar/page';
 import { Pagination } from '@nextui-org/react';
 import { animateScroll as scroll } from 'react-scroll';
 import Image from 'next/image';
+import CommitteeCard from '@/components/card/page';
 
 const Page = () => {
   const [committeeList, setCommitteeList] = useState([]);
@@ -19,7 +19,7 @@ const Page = () => {
 
   const fetchCommitteeList = async () => {
     const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}committee`);
-    setCommitteeList(data);
+    setCommitteeList(data.sort((a, b) => a.serialNumber - b.serialNumber)); // Sort by serialNumber
   };
 
   // Calculate the items to be displayed on the current page
