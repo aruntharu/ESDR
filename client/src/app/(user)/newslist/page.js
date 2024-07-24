@@ -66,9 +66,9 @@ const page = () => {
                             </p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">
-                            image
-                            </p>
+                             console.log(`${process.env.NEXT_PUBLIC_API_URL}uploads/committeeImage/${item.personPhoto}`);
+
+                      <img src={`${process.env.NEXT_PUBLIC_API_URL}uploads/committeeImage/${item.personPhoto}`} alt="Committee" className="w-16 h-16 object-cover" />
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <span

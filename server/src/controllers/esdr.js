@@ -1,31 +1,27 @@
 const Esdr = require('../models/esdr');
 
 const addEsdr = async (req, res) => {
-  req.body.personPhoto = req.file.filename;
+  req.body.esdrImage = req.file.filename;
   await Esdr.create(req.body);
-  return res.json({
-    msg: 'Esdr Added',
-  });
+  return res.json({ msg: 'Esdr Added' });
 };
 
 const getAllEsdr = async (req, res) => {
-  const esdr = await Esdr.find().sort({ serialNumber: 1 }); // Sort by serialNumber
-  return res.json(esdr);
+  const esdrList = await Esdr.find();
+  return res.json(esdrList);
 };
 
 const deleteEsdrById = async (req, res) => {
-  const esdr = await Esdr.findByIdAndDelete(req.params.id);
-  return res.json(esdr);
+  const esdrList = await Esdr.findByIdAndDelete(req.params.id);
+  return res.json(esdrList);
 };
 
 const getEsdrDetailsById = async (req, res) => {
   try {
-    const esdr = await Esdr.findById(req.params.id);
-    return res.json(esdr);
+    const esdrList = await Esdr.findById(req.params.id);
+    return res.json(esdrList);
   } catch (err) {
-    return res.json({
-      msg: 'Unable to fetch',
-    });
+    return res.json({ msg: 'Unable to fetch' });
   }
 };
 

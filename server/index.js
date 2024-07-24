@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+const path = require('path');
+const fs = require('fs');
+const cors = require('cors');
 const dbConnect = require('./src/db/connection');
 const userRoute = require('./src/routes/user');
 const newsRoute = require('./src/routes/news');
@@ -7,9 +10,6 @@ const messageRoute = require('./src/routes/message');
 const committeeRoute = require('./src/routes/committee');
 const esdrRoute = require('./src/routes/esdr');
 const noticeRoute = require('./src/routes/notice');
-const path = require('path');
-const fs = require('fs');
-const cors = require('cors');
 
 dbConnect();
 

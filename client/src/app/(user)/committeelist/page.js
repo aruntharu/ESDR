@@ -56,8 +56,7 @@ const AdminCommitteeList = () => {
               </tr>
             </thead>
             <tbody>
-              {committeeList.length > 0 &&
-                committeeList.map((item) => (
+              {committeeList.length > 0 && committeeList.map((item) => (
                   <tr key={item._id}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p className="text-gray-900 whitespace-no-wrap">{item.serialNumber}</p>
