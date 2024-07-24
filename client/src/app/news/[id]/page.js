@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import parse from 'html-react-parser'
 
 const NewsDetails = ({ params }) => {
-  const [newsDetails, setNewsList] = useState({})
+  const [newsDetails, setNewsDetails] = useState({})
 
   useEffect(() => {
     if (params.id) {
@@ -16,7 +16,7 @@ const NewsDetails = ({ params }) => {
 
   const fetchnewsDetails = async () => {
     const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}news/${params.id}`)
-    setNewsList(data)
+    setNewsDetails(data)
   }
 
   return (
@@ -39,7 +39,11 @@ const NewsDetails = ({ params }) => {
                     alt={newsDetails?.newsHeading}
                   />
                   <p className="mt-1 text-gray-500 text-sm mb-4 ">{newsDetails?.newsDate}</p>
-                  <p className="leading-relaxed text-justify ">{parse(newsDetails?.newsDescription)}</p>
+                  <p className="leading-relaxed text-justify ">
+                    {newsDetails?.newsDescription && typeof newsDetails.newsDescription === 'string'
+                      ? parse(newsDetails.newsDescription)
+                      : ''}
+                  </p>
                 </div>
               </div>
             </div>
