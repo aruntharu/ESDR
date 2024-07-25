@@ -1,9 +1,15 @@
+// src/controllers/esdr.js
 const Esdr = require('../models/esdr');
 
 const addEsdr = async (req, res) => {
-  req.body.esdrImage = req.file.filename;
-  await Esdr.create(req.body);
-  return res.json({ msg: 'Esdr Added' });
+  try {
+    req.body.esdrImage = req.file.filename;
+    req.body.esdrDate = new Date(req.body.esdrDate); // Convert to Date object
+    await Esdr.create(req.body);
+    return res.json({ msg: 'Esdr Added' });
+  } catch (err) {
+    return res.status(500).json({ msg: 'Error adding Esdr', error: err });
+  }
 };
 
 const getAllEsdr = async (req, res) => {

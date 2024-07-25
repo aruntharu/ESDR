@@ -1,18 +1,22 @@
-const { Router } = require('express');
+// src/routes/esdr.js
+const express = require('express');
 const multer = require('multer');
+const path = require('path');
+const { addEsdr, getAllEsdr, deleteEsdrById, getEsdrDetailsById } = require('../controllers/esdr');
+
+const router = express.Router();
+
+// Configure multer for file uploads
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: (req, file, cb) => {
     cb(null, 'uploads/esdrImage/');
   },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname);
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
 
-const upload = multer({ storage: storage });
-const router = Router();
-
-const { addEsdr, getAllEsdr, deleteEsdrById, getEsdrDetailsById } = require('../controllers/esdr');
+const upload = multer({ storage });
 
 router.post('/esdr', upload.single('esdrImage'), addEsdr);
 router.get('/esdr', getAllEsdr);

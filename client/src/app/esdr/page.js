@@ -1,11 +1,12 @@
 'use client';
-import CustomNavBar from '@/components/navbar/page';
-import { FaRegCalendarCheck } from "react-icons/fa";
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { Button, Image } from "@nextui-org/react";
+import axios from 'axios';
+import CustomNavBar from '@/components/navbar/page';
+import { FiCalendar } from "react-icons/fi";
+import { useRouter } from 'next/navigation';
 import parse from 'html-react-parser';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const Esdr = () => {
   const router = useRouter();
@@ -18,7 +19,13 @@ const Esdr = () => {
   const fetchEsdrList = async () => {
     try {
       const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}esdr`);
-      setEsdrList(data);
+      // Ensure esdrDate is in proper Date format before sorting
+      data.forEach(item => {
+        item.esdrDate = new Date(item.esdrDate);
+      });
+      // Sort the list by date from latest to oldest
+      const sortedData = data.sort((a, b) => b.esdrDate - a.esdrDate);
+      setEsdrList(sortedData);
     } catch (error) {
       console.error('Error fetching ESDR list:', error);
     }
@@ -29,50 +36,66 @@ const Esdr = () => {
     return plainText.split(' ').slice(0, limit).join(' ') + '.......';
   };
 
+  const formatDate = (date) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(date).toLocaleDateString(undefined, options);
+  };
+
   return (
     <div>
       <CustomNavBar />
-      {esdrList.map((item) => {
-        const esdrPreview = getWordLimitedText(item.esdrDescription, 65);
-        const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}uploads/esdrImage/${item.esdrImage}`;
-        return (
-          <section key={item._id} className="text-gray-600 body-font overflow-hidden">
-            <div className="container px-5 py-7 mx-auto">
-              <div className="-my-8 divide-y-2 divide-gray-100">
-                <div className="py-8 flex flex-wrap md:flex-nowrap">
-                  <div className="md:w-30 mr-6 md:mb-0 mb-2 flex-shrink-0 flex flex-col">
-                    {console.log(imageUrl)}
-                    <img
-                      src={imageUrl}
-                      alt={item.esdrHeading}
-                      className="w-16 h-16 object-cover"
-                      onError={(e) => e.target.src = '/placeholder-image.png'}
-                    />
-                  </div>
-                  <div className="md:flex-grow">
-                    <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">{item.esdrHeading}</h2>
-                    <div className='flex'>
-                      <div className="mt-1 mr-2"><FaRegCalendarCheck /></div>
-                      <div>
-                        <p className="leading-relaxed">{item.esdrDate}</p>
-                      </div>
-                    </div>
-                    <p className="leading-relaxed text-justify">{parse(esdrPreview)}</p>
-                    <p onClick={() => router.push('/esdr/' + item._id)} className="text-indigo-500 inline-flex items-center mt-4">
-                      Read More
-                      <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M5 12h14"></path>
-                        <path d="M12 5l7 7-7 7"></path>
-                      </svg>
-                    </p>
-                  </div>
+      {/* Banner Section */}
+      <div className="relative w-full h-64 overflow-hidden banner">
+        <Image
+          src="/banner.jpeg" // Path to your image in the public folder
+          alt="Esdr Banner"
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+          className="banner-image"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+          <h1 className="text-4xl font-bold">ESDR</h1>
+        </div>
+      </div>
+      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 pt-12 pb-24">
+        {esdrList.map((item) => {
+          const esdrPreview = getWordLimitedText(item.esdrDescription, 65);
+          const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}uploads/esdrImage/${item.esdrImage}`;
+          return (
+            <div key={item._id}>
+              <Link href={`/esdr/${item._id}`}>
+                <img
+                  src={imageUrl}
+                  alt={item.esdrHeading}
+                  className="w-full h-52 md:h-64 lg:h-96 xl:h-64 object-cover"
+                  onError={(e) => e.target.src = '/placeholder-image.png'}
+                />
+              </Link>
+              <div className="bg-gray-50 p-8">
+                <div className="flex items-center text-xs text-gray-600 uppercase font-semibold">
+                  <FiCalendar className="mr-1" /> {/* Adding the calendar icon */}
+                  {formatDate(item.esdrDate)}
                 </div>
+                <h2 className="mt-3 text-3xl mb-6 font-display text-black leading-tight max-w-sm">{item.esdrHeading}</h2>
+                <p className="mt-4 max-w-md leading-relaxed">{parse(esdrPreview)}</p>
+                <Link href={`/esdr/${item._id}`} className="flex items-center mt-6 uppercase text-sm text-black font-semibold">
+                  Read article 
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </Link>
               </div>
             </div>
-            <hr />
-          </section>
-        );
-      })}
+          );
+        })}
+      </div>
+      <style jsx>{`
+        .banner {
+          clip-path: polygon(50% 0%, 100% 0, 100% 66%, 80% 100%, 45% 98%, 0 75%, 0 0);
+        }
+      `}</style>
     </div>
   );
 };

@@ -9,6 +9,7 @@ const newsRoute = require('./src/routes/news');
 const messageRoute = require('./src/routes/message');
 const committeeRoute = require('./src/routes/committee');
 const esdrRoute = require('./src/routes/esdr');
+const contactRoute = require('./src/routes/contact');
 const noticeRoute = require('./src/routes/notice');
 
 dbConnect();
@@ -38,6 +39,7 @@ app.use(newsRoute);
 app.use(messageRoute);
 app.use(committeeRoute);
 app.use(esdrRoute);
+app.use(contactRoute);
 app.use(noticeRoute);
 app.use('/uploads/committeeImage', express.static(path.join(__dirname, 'uploads/committeeImage')));
 app.use('/uploads/esdrImage', express.static(path.join(__dirname, 'uploads/esdrImage')));

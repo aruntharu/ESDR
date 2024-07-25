@@ -1,17 +1,29 @@
 'use client';
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
-import { Input } from '@nextui-org/react';
+import { Input, Calendar } from '@nextui-org/react';
+import { CalendarDate, parseDate, today } from '@internationalized/date';
 import toast from 'react-hot-toast';
 import { FaBackspace } from 'react-icons/fa';
 import { Button } from '@nextui-org/react';
 import Link from 'next/link';
-import JoditEditor from 'jodit-react';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+
+// Dynamically import JoditEditor
+const JoditEditor = dynamic(() => import('jodit-react'), {
+  ssr: false,
+});
 
 const Page = () => {
   const [image, setImage] = useState(null);
   const [content, setContent] = useState('');
   const [logs, setLogs] = useState([]);
+  const [isCalendarVisible, setCalendarVisible] = useState(false);
+  const calendarRef = useRef(null);
+  const dateInputRef = useRef(null);
+  const fileInputRef = useRef(null);
+  const router = useRouter();
 
   const appendLog = useCallback(
     (message) => {
@@ -60,7 +72,6 @@ const Page = () => {
     { name: 'esdrHeading', label: 'Esdr Heading' },
     { name: 'esdrIntro', label: 'Esdr Intro' },
     { name: 'esdrDescription', label: 'Esdr Description' },
-    { name: 'esdrDate', label: 'Esdr Date' },
   ];
 
   const formik = useFormik({
@@ -68,10 +79,18 @@ const Page = () => {
       esdrHeading: '',
       esdrIntro: '',
       esdrDescription: '',
-      esdrDate: '',
+      esdrDate: parseDate(new Date().toISOString().split('T')[0]), // Initialize with current date
     },
-    onSubmit: (values) => {
-      submitEsdr(values);
+    onSubmit: async (values, { resetForm }) => {
+      const success = await submitEsdr(values);
+      if (success) {
+        resetForm();
+        setContent('');
+        setImage(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = null;
+        }
+      }
     },
   });
 
@@ -80,23 +99,81 @@ const Page = () => {
     formData.append('esdrHeading', values.esdrHeading);
     formData.append('esdrIntro', values.esdrIntro);
     formData.append('esdrDescription', values.esdrDescription);
-    formData.append('esdrDate', values.esdrDate);
-    formData.append('esdrImage', image);
+    formData.append('esdrDate', values.esdrDate.toString());
 
-    const requestOptions = {
-      method: 'POST',
-      body: formData
+    if (image) {
+      formData.append('esdrImage', image);
+    }
+
+    console.log('Form Data:', formData);
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}esdr`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      console.log('Response Data:', data);
+
+      if (data.msg) {
+        toast(data.msg);
+        return true; // Indicate success
+      } else {
+        toast('Failed to add ESDR');
+        console.error('Error adding ESDR:', data);
+        return false; // Indicate failure
+      }
+    } catch (error) {
+      toast('Error adding ESDR');
+      console.error('Error:', error);
+      return false; // Indicate failure
+    }
+  };
+
+  const handleDateInputClick = () => {
+    setCalendarVisible(true);
+  };
+
+  const handleDateChange = (value) => {
+    formik.setFieldValue('esdrDate', value);
+    setCalendarVisible(false); // Hide the calendar after selecting a date
+  };
+
+  const handleClickOutside = (event) => {
+    if (
+      calendarRef.current &&
+      !calendarRef.current.contains(event.target) &&
+      dateInputRef.current &&
+      !dateInputRef.current.contains(event.target)
+    ) {
+      setCalendarVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
     };
+  }, []);
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}esdr`, requestOptions);
-    const data = await response.json();
-    if (data.msg) {
-      toast(data.msg);
+  const handleSubmitAndReturn = async (e) => {
+    e.preventDefault();
+    const success = await submitEsdr(formik.values);
+    if (success) {
+      formik.resetForm();
+      setContent('');
+      setImage(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = null;
+      }
+      router.push('/esdrlist');
     }
   };
 
   return (
-    <form className='m-4 flex flex-col border shadow-md rounded-lg p-4' onSubmit={formik.handleSubmit}>
+    <form className='m-4 flex flex-col border shadow-md rounded-lg p-4 relative' onSubmit={formik.handleSubmit}>
       <div className='flex'>
         <Link href="/esdrlist"><FaBackspace className='size-6 mr-1' /></Link>
         <p className='flex'>Back</p>
@@ -124,9 +201,31 @@ const Page = () => {
           )}
         </div>
       ))}
-      <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+      <div className="relative">
+        <label htmlFor="esdrDate">Post Date</label>
+        <Input
+          ref={dateInputRef}
+          id="esdrDate"
+          name="esdrDate"
+          type="text"
+          value={formik.values.esdrDate.toString()}
+          onFocus={handleDateInputClick}
+          readOnly
+        />
+        {isCalendarVisible && (
+          <div ref={calendarRef} className="absolute z-10 mt-2 bg-white shadow-lg rounded-md">
+            <Calendar
+              value={formik.values.esdrDate}
+              onChange={handleDateChange}
+              maxValue={today()} // Set the maximum date to today's date
+            />
+          </div>
+        )}
+      </div>
+      <input ref={fileInputRef} type="file" onChange={(e) => setImage(e.target.files[0])} />
       <div className='flex'>
         <Button color="success" className='p-2 my-4 mr-4 w-[10%] flex' type="submit">Submit</Button>
+        <Button color="primary" className='p-2 my-4 w-[15%] flex' onClick={handleSubmitAndReturn}>Submit & Return</Button>
       </div>
     </form>
   );

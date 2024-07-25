@@ -1,60 +1,45 @@
-'use client'
-import CustomNavBar from '@/components/navbar/page'
-import React,{useState, useEffect} from 'react';
+'use client';
+import CustomNavBar from '@/components/navbar/page';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
-import { Input} from '@nextui-org/react';
-import toast from 'react-hot-toast';
-import { FaBackspace } from "react-icons/fa";
-import {Button} from "@nextui-org/react";
-import Link from 'next/link';
+import { Input, Textarea } from '@nextui-org/react';
+import { Button } from "@nextui-org/react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-const page = () => {
+const Page = () => {
+  const [submitted, setSubmitted] = useState(false);
+
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
 
-  const messageDetails= [
-    {name:'contactFullName', label:'Contact Full Name'},
-     {name:'contactPhoneNumber', label:'Contact Phone Number'}, 
-     {name:'contactMail', label:'Contact Mail'},  
-     {name:'contactMessage', label:'Contact Message'}, 
-  ];
-
   const formik = useFormik({
     initialValues: {
-      contactFullName:'',
       contactFullName: '',
+      contactPhoneNumber: '',
       contactMail: '',
       contactMessage: '',
     },
-    onSubmit: values => {
-      submitMessage(values)
+    onSubmit: async (values) => {
+      await submitMessage(values);
+      setSubmitted(true);
     },
   });
 
-  const submitMessage = async(values) => {
-    let formData = new FormData(); 
-    formData.append('contactFullName', values.contactFullName); 
-    formData.append('contactFullName', values.contactFullName);
-    formData.append('contactMail', values.contactMail);
-    formData.append('contactMessage', values.contactMessage);
-
-    const requestOptions = {
+  const submitMessage = async (values) => {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}contact`, {
       method: 'POST',
-      body: formData
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    });
   };
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}contact`, requestOptions);
-  const data = await response.json()
-  if(data.msg){
-    toast(data.msg)
-  }
-  }
 
   return (
     <div>
-      <CustomNavBar/>
+      <CustomNavBar />
       <section className="text-gray-600 body-font relative">
         <div className="absolute inset-0 bg-gray-300">
           <iframe
@@ -69,39 +54,66 @@ const page = () => {
           ></iframe>
         </div>
         <div className="container px-5 py-24 mx-auto flex">
-          <div className="lg:w-1/2 px-6 mt-4 lg:mt-0" data-aos="fade-right">
-            <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">EMAIL</h2>
-            <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">PHONE</h2>
-          </div>
           <div className="lg:w-1/3 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md" data-aos="fade-left">
-            <p className="leading-relaxed mb-5 text-gray-600">ESDR</p>
-            <h2 className="text-gray-900 text-lg mb-1 font-medium title-font">Feedback</h2>
-            <div className="relative mb-4">
-              <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                data-aos="fade-up"
-              />
-            </div>
-            <div className="relative mb-4">
-              <label htmlFor="message" className="leading-7 text-sm text-gray-600">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                data-aos="fade-up"
-              ></textarea>
-            </div>
-            <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" data-aos="fade-up">Submit</button>
-            <p className="text-xs text-gray-500 mt-3" data-aos="fade-up">Chicharrones blog helvetica normcore iceland tousled brook viral artisan.</p>
+            <h2 className="text-gray-900 text-lg mb-1 font-medium title-font">Contact Us</h2>
+            <form onSubmit={formik.handleSubmit}>
+              <div className="relative mb-4">
+                <label htmlFor="fullName" className="leading-7 text-sm text-gray-600">Full Name</label>
+                <Input
+                  type="text"
+                  id="fullName"
+                  name="contactFullName"
+                  className="w-full bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-0 leading-8 transition-colors duration-200 ease-in-out"
+                  onChange={formik.handleChange}
+                  value={formik.values.contactFullName}
+                />
+              </div>
+              <div className="relative mb-4">
+                <label htmlFor="phoneNumber" className="leading-7 text-sm text-gray-600">Phone Number</label>
+                <Input
+                  type="text"
+                  id="phoneNumber"
+                  name="contactPhoneNumber"
+                  className="w-full bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-0 leading-8 transition-colors duration-200 ease-in-out"
+                  onChange={formik.handleChange}
+                  value={formik.values.contactPhoneNumber}
+                />
+              </div>
+              <div className="relative mb-4">
+                <label htmlFor="mail" className="leading-7 text-sm text-gray-600">Mail</label>
+                <Input
+                  type="text"
+                  id="mail"
+                  name="contactMail"
+                  className="w-full bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-0 leading-8 transition-colors duration-200 ease-in-out"
+                  onChange={formik.handleChange}
+                  value={formik.values.contactMail}
+                />
+              </div>
+              <div className="relative mb-4">
+                <label htmlFor="message" className="leading-7 text-sm text-gray-600">Message</label>
+                <Textarea
+                  id="message"
+                  name="contactMessage"
+                  className="w-full bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-0 leading-8 transition-colors duration-200 ease-in-out"
+                  onChange={formik.handleChange}
+                  value={formik.values.contactMessage}
+                  rows={6} // Increase the number of rows to make the textarea larger
+                />
+              </div>
+              <Button
+                className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none rounded text-lg"
+                type="submit"
+                disabled={submitted}
+              >
+                {submitted ? "Thank you for the feedback" : "Submit"}
+              </Button>
+            </form>
           </div>
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default page;
+export default Page;

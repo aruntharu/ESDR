@@ -5,7 +5,7 @@ const esdrSchema = new Schema({
   esdrHeading: String,
   esdrIntro: String,
   esdrDescription: String,
-  esdrDate: String,
+  esdrDate: Date, // Use Date type
   esdrImage: String,
 });
 

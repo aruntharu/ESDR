@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Input } from '@nextui-org/react';
@@ -6,7 +6,12 @@ import toast from 'react-hot-toast';
 import { FaBackspace } from "react-icons/fa";
 import { Button } from "@nextui-org/react";
 import Link from 'next/link';
-import JoditEditor from "jodit-react";
+import dynamic from 'next/dynamic';
+
+// Dynamically import JoditEditor
+const JoditEditor = dynamic(() => import('jodit-react'), {
+  ssr: false,
+});
 
 const Page = () => {
   const [image, setImage] = useState(null);

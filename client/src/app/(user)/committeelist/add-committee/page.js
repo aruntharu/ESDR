@@ -6,14 +6,19 @@ import toast from 'react-hot-toast';
 import { FaBackspace } from 'react-icons/fa';
 import { Button } from '@nextui-org/react';
 import Link from 'next/link';
-import JoditEditor from "jodit-react";
+import dynamic from 'next/dynamic';
+
+// Dynamically import JoditEditor
+const JoditEditor = dynamic(() => import("jodit-react"), {
+  ssr: false,
+});
 
 const AddCommittee = () => {
   const committeeDetails = [
     { name: 'fullName', label: 'Full Name' },
     { name: 'designation', label: 'Designation' },
     { name: 'personDescription', label: 'Person Description' },
-    { name: 'serialNumber', label: 'Serial Number' }, // Add this line
+    { name: 'serialNumber', label: 'Serial Number' },
   ];
 
   const [image, setImage] = useState(null);
@@ -67,7 +72,7 @@ const AddCommittee = () => {
       fullName: '',
       designation: '',
       personDescription: '',
-      serialNumber: '', // Add this line
+      serialNumber: '',
     },
     onSubmit: (values) => {
       submitCommittee(values);
@@ -79,7 +84,7 @@ const AddCommittee = () => {
     formData.append('fullName', values.fullName);
     formData.append('designation', values.designation);
     formData.append('personDescription', values.personDescription);
-    formData.append('serialNumber', values.serialNumber); // Add this line
+    formData.append('serialNumber', values.serialNumber);
     formData.append('committeeImage', image);
 
     const requestOptions = {
@@ -117,7 +122,7 @@ const AddCommittee = () => {
             <Input
               id={item.name}
               name={item.name}
-              type={item.name === 'serialNumber' ? 'number' : 'text'} // Handle serialNumber input type
+              type={item.name === 'serialNumber' ? 'number' : 'text'}
               onChange={formik.handleChange}
               value={formik.values[item.name]}
             />

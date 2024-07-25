@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BiTrash } from 'react-icons/bi';
 import { FiFilePlus } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
+import { format } from 'date-fns';
 
 const Page = () => {
   const router = useRouter();
@@ -16,6 +17,10 @@ const Page = () => {
   const fetchEsdr = async () => {
     try {
       const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}esdr`);
+      // Format the date
+      data.forEach(item => {
+        item.esdrDate = format(new Date(item.esdrDate), 'yyyy-MM-dd');
+      });
       setEsdrList(data);
     } catch (error) {
       console.error('Error fetching ESDR list:', error);
@@ -37,7 +42,7 @@ const Page = () => {
     <div className="mx-10">
       <div className='flex' onClick={() => router.push('/esdrlist/add-esdr')}>
         <p className='flex'>
-          <FiFilePlus className='size-6' />Add Esdr
+          <FiFilePlus className='size-6' /> Add Esdr
         </p>
       </div>
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -73,7 +78,6 @@ const Page = () => {
                     <p className="text-gray-900 whitespace-no-wrap">{item.esdrDate}</p>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    {console.log(`${process.env.NEXT_PUBLIC_API_URL}uploads/esdrImage/${item.esdrImage}`)}
                     <img
                       src={`${process.env.NEXT_PUBLIC_API_URL}uploads/esdrImage/${item.esdrImage}`}
                       alt="Esdr Image"

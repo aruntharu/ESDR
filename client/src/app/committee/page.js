@@ -44,19 +44,18 @@ const Page = () => {
         <CustomNavBar />
       </div>
       {/* Banner Section */}
-      <div className="relative w-full h-64 overflow-hidden ">
-        <div className="w-full h-full relative">
-          <Image
-            src="/banner.jpeg" // Path to your image in the public folder
-            alt="Committee Banner"
-            layout="fill"
-            objectFit="cover"
-            quality={100}
-          />
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-            <h1 className="text-4xl font-bold">Committee</h1>
-          </div>
+      <div className="relative w-full h-64 overflow-hidden banner">
+        <Image
+          src="/banner.jpeg" // Path to your image in the public folder
+          alt="Committee Banner"
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+          className="banner-image"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+          <h1 className="text-4xl font-bold">Committee</h1>
         </div>
       </div>
       <div className="container mx-auto py-4">
@@ -73,6 +72,17 @@ const Page = () => {
           />
         </div>
       </div>
+      <style jsx>{`
+        .banner {
+          position: relative;
+          clip-path: polygon(50% 0%, 100% 0, 100% 66%, 80% 100%, 45% 98%, 0 75%, 0 0);
+        }
+        .banner-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      `}</style>
     </div>
   );
 };
