@@ -129,8 +129,15 @@ const Page = () => {
               <ModalBody style={{ maxHeight: '80vh', overflowY: 'auto' }}>
                 <p>Full Name: {selectedUser.fullName}</p>
                 <p>Date of Birth: {selectedUser.dob}</p>
-                <p>Citizenship Number: {selectedUser.citizenshipNumber}</p>
-                <p>Citizenship Number: {selectedUser.citizenshipNumber}</p>
+                {selectedUser.nationality === 'Nepali' ? (
+                  <>
+                    <p>Citizenship Number: {selectedUser.verificationNumber}</p>
+                  </>
+                ) : (
+                  <>
+                    <p>Passport Number: {selectedUser.verificationNumber}</p>
+                  </>
+                )}
                 <p>Permanent Address: {selectedUser.permanentAddress}</p>
                 <p>Temporary Address: {selectedUser.temporaryAddress}</p>
                 <p>Email: {selectedUser.email}</p>

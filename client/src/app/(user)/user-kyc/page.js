@@ -20,6 +20,7 @@ const UserKyc = () => {
     { name: 'fathersName', label: 'Fathers Name' },
     { name: 'permanentAddress', label: 'Permanent Address' },
     { name: 'temporaryAddress', label: 'Temporary Address' },
+    { name: 'verificationNumber', label: 'Verification Number' },
     { name: 'nationality', label: 'Nationality', radioOption: ['Nepali', 'Foreign'], type: 'radio' }
   ];
 
