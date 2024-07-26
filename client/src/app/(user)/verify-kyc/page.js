@@ -131,11 +131,11 @@ const Page = () => {
                 <p>Date of Birth: {selectedUser.dob}</p>
                 {selectedUser.nationality === 'Nepali' ? (
                   <>
-                    <p>Citizenship Number: {selectedUser.verificationNumber}</p>
+                    <p>Citizenship Number: {selectedUser.citizenshipNumber}</p>
                   </>
                 ) : (
                   <>
-                    <p>Passport Number: {selectedUser.verificationNumber}</p>
+                    <p>Passport Number: {selectedUser.passportNumber}</p>
                   </>
                 )}
                 <p>Permanent Address: {selectedUser.permanentAddress}</p>

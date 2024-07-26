@@ -1,13 +1,13 @@
-'use client'
-import React, { useState } from "react";
-import { Tabs, Tab, Input, Link, Button, Card, CardBody } from "@nextui-org/react";
+'use client';
+import React, { useState, useEffect, useRef } from 'react';
+import { Tabs, Tab, Input, Link, Button, Card, CardBody } from '@nextui-org/react';
 import { useFormik } from 'formik';
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { setLoginDetails } from "@/redux/reducerSlices/userSlice";
-import { useDispatch } from "react-redux";
-import CustomNavBar from "@/components/navbar/page";
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { setLoginDetails } from '@/redux/reducerSlices/userSlice';
+import { useDispatch } from 'react-redux';
+import CustomNavBar from '@/components/navbar/page';
 import * as Yup from 'yup';
 import { HiEye, HiEyeOff } from 'react-icons/hi'; // Import eye icons
 import 'react-phone-number-input/style.css'; // Import default styles
@@ -34,7 +34,7 @@ const SignupSchema = Yup.object().shape({
 export default function App() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [selected, setSelected] = useState("login");
+  const [selected, setSelected] = useState('login');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -47,7 +47,7 @@ export default function App() {
       confirmPassword: '',
     },
     validationSchema: SignupSchema,
-    onSubmit: values => {
+    onSubmit: (values) => {
       registerUser(values);
     },
   });
@@ -57,7 +57,7 @@ export default function App() {
       email: '',
       password: '',
     },
-    onSubmit: values => {
+    onSubmit: (values) => {
       loginUser(values);
     },
   });
@@ -115,7 +115,7 @@ export default function App() {
       <div className="flex flex-col w-full">
         <Card className="flex self-center max-w-full w-[340px]">
           <CardBody className="overflow-hidden">
-            <Image src="/logo.png" width={150} height={160} className='my-4 mx-4' />
+            <Image src="/logo.png" width={150} height={160} className="my-4 mx-4" />
             <Tabs
               fullWidth
               size="md"
@@ -125,7 +125,7 @@ export default function App() {
             >
               <Tab key="login" title="Login">
                 <form onSubmit={formikLogin.handleSubmit} className="flex flex-col gap-4">
-                  <Input 
+                  <Input
                     name="email"
                     type="text"
                     onChange={formikLogin.handleChange}
@@ -138,11 +138,11 @@ export default function App() {
                   {formikLogin.errors.email && formikLogin.touched.email && (
                     <div className="text-red-500 text-sm">{formikLogin.errors.email}</div>
                   )}
-                  
+
                   <div className="relative">
                     <Input
                       name="password"
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword ? 'text' : 'password'}
                       onChange={formikLogin.handleChange}
                       value={formikLogin.values.password}
                       isRequired
@@ -161,10 +161,10 @@ export default function App() {
                   {formikLogin.errors.password && formikLogin.touched.password && (
                     <div className="text-red-500 text-sm">{formikLogin.errors.password}</div>
                   )}
-                  
+
                   <p className="text-center text-small">
-                    Need to create an account?{" "}
-                    <Link size="sm" onPress={() => setSelected("sign-up")}>
+                    Need to create an account?{' '}
+                    <Link size="sm" onPress={() => setSelected('sign-up')}>
                       Sign up
                     </Link>
                   </p>
@@ -191,8 +191,8 @@ export default function App() {
                   {formik.errors.fullName && formik.touched.fullName && (
                     <div className="text-red-500 text-sm">{formik.errors.fullName}</div>
                   )}
-                  
-                  <Input 
+
+                  <Input
                     name="email"
                     type="text"
                     onChange={formik.handleChange}
@@ -205,7 +205,7 @@ export default function App() {
                   {formik.errors.email && formik.touched.email && (
                     <div className="text-red-500 text-sm">{formik.errors.email}</div>
                   )}
-                  
+
                   <div className="relative">
                     <label className="block text-sm font-medium text-gray-700">
                       Phone Number *
@@ -214,8 +214,8 @@ export default function App() {
                         defaultCountry="US"
                         name="phoneNumber"
                         value={formik.values.phoneNumber}
-                        onChange={value => formik.setFieldValue('phoneNumber', value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-[#f4f4f5] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        onChange={(value) => formik.setFieldValue('phoneNumber', value)}
+                        className={`w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${formik.errors.phoneNumber && formik.touched.phoneNumber ? 'border-red-500' : 'border-gray-300'}`}
                         placeholder="Enter phone number"
                       />
                     </label>
@@ -223,11 +223,11 @@ export default function App() {
                   {formik.errors.phoneNumber && formik.touched.phoneNumber && (
                     <div className="text-red-500 text-sm">{formik.errors.phoneNumber}</div>
                   )}
-                  
+
                   <div className="relative">
                     <Input
                       name="password"
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword ? 'text' : 'password'}
                       onChange={formik.handleChange}
                       value={formik.values.password}
                       isRequired
@@ -246,11 +246,11 @@ export default function App() {
                   {formik.errors.password && formik.touched.password && (
                     <div className="text-red-500 text-sm">{formik.errors.password}</div>
                   )}
-                  
+
                   <div className="relative">
                     <Input
                       name="confirmPassword"
-                      type={showConfirmPassword ? "text" : "password"}
+                      type={showConfirmPassword ? 'text' : 'password'}
                       onChange={formik.handleChange}
                       value={formik.values.confirmPassword}
                       isRequired
@@ -269,10 +269,10 @@ export default function App() {
                   {formik.errors.confirmPassword && formik.touched.confirmPassword && (
                     <div className="text-red-500 text-sm">{formik.errors.confirmPassword}</div>
                   )}
-                  
+
                   <p className="text-center text-small">
-                    Already have an account?{" "}
-                    <Link size="sm" onPress={() => setSelected("login")}>
+                    Already have an account?{' '}
+                    <Link size="sm" onPress={() => setSelected('login')}>
                       Login
                     </Link>
                   </p>

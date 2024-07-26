@@ -8,6 +8,39 @@ import toast from 'react-hot-toast';
 import { setUserKycVerifiedStatus } from '@/redux/reducerSlices/userSlice';
 import { useRouter } from 'next/navigation';
 
+const provinceDistricts = {
+  Koshi: [
+    'Bhojpur', 'Khotang', 'Sankhuwasabha', 'Terhathum', 'Dhankuta', 'Morang',
+    'Solukhumbu', 'Udayapur', 'Illam', 'Okhaldhunga', 'Sunsari', 'Jhapa',
+    'Panchthar', 'Taplejung'
+  ],
+  Madhesh: [
+    'Parsa', 'Bara', 'Rautahat', 'Sarlahi', 'Siraha', 'Dhanusa', 'Saptari',
+    'Mahottari'
+  ],
+  Bagmati: [
+    'Bhaktapur', 'Chitwan', 'Dhading', 'Dolakha', 'Kathmandu', 'Kavrepalanchok',
+    'Lalitpur', 'Makwanpur', 'Nuwakot', 'Ramechhap', 'Rasuwa', 'Sindhuli',
+    'Sindhupalchok'
+  ],
+  Gandaki: [
+    'Baglung', 'Gorkha', 'Kaski', 'Lamjung', 'Manang', 'Mustang', 'Myagdi',
+    'Nawalpur', 'Parbat', 'Syangja', 'Tanahun'
+  ],
+  Lumbini: [
+    'Arghakhanchi', 'Banke', 'Bardiya', 'Dang Deukhuri', 'Eastern Rukum',
+    'Gulmi', 'Kapilvastu', 'Parasi', 'Palpa', 'Pyuthan', 'Rolpa', 'Rupandehi'
+  ],
+  Karnali: [
+    'Dailekh', 'Dolpa', 'Humla', 'Jajarkot', 'Jumla', 'Kalikot', 'Mugu',
+    'Salyan', 'Surkhet', 'Western Rukum'
+  ],
+  Sudurpaschim: [
+    'Achham', 'Baitadi', 'Bajhang', 'Dadeldhura', 'Darchula', 'Doti', 'Kailali',
+    'Kanchanpur', 'Bajura'
+  ]
+};
+
 const UserKyc = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -20,7 +53,6 @@ const UserKyc = () => {
     { name: 'fathersName', label: 'Fathers Name' },
     { name: 'permanentAddress', label: 'Permanent Address' },
     { name: 'temporaryAddress', label: 'Temporary Address' },
-    { name: 'verificationNumber', label: 'Verification Number' },
     { name: 'nationality', label: 'Nationality', radioOption: ['Nepali', 'Foreign'], type: 'radio' }
   ];
 
@@ -37,10 +69,15 @@ const UserKyc = () => {
     permanentAddress: '',
     temporaryAddress: '',
     nationality: 'Nepali',
-    verificationNumber: '',
+    citizenshipNumber: '',
+    province: '',
+    district: '',
+    passportNumber: '',
     verificationPhotoFront: '',
     verificationPhotoBack: ''
   });
+
+  const [districtOptions, setDistrictOptions] = useState([]);
 
   useEffect(() => {
     const fetchKycDetails = async () => {
@@ -58,10 +95,16 @@ const UserKyc = () => {
             permanentAddress: data.permanentAddress || '',
             temporaryAddress: data.temporaryAddress || '',
             nationality: data.nationality || 'Nepali',
-            verificationNumber: data.verificationNumber || '',
+            citizenshipNumber: data.citizenshipNumber || '',
+            province: data.province || '',
+            district: data.district || '',
+            passportNumber: data.passportNumber || '',
             verificationPhotoFront: '',
             verificationPhotoBack: ''
           });
+          if (data.province) {
+            setDistrictOptions(provinceDistricts[data.province]);
+          }
         } catch (error) {
           console.error('Error fetching KYC details:', error);
         }
@@ -105,7 +148,10 @@ const UserKyc = () => {
     formData.append('permanentAddress', values.permanentAddress);
     formData.append('temporaryAddress', values.temporaryAddress);
     formData.append('userId', _id);
-    formData.append('verificationNumber', values.verificationNumber);
+    formData.append('citizenshipNumber', values.citizenshipNumber);
+    formData.append('province', values.province);
+    formData.append('district', values.district);
+    formData.append('passportNumber', values.passportNumber);
     formData.append('front', imageFront);
     formData.append('back', imageBack);
     formData.append('nationality', values.nationality);
@@ -129,6 +175,13 @@ const UserKyc = () => {
 
   const [imageFront, setImageFront] = useState(null);
   const [imageBack, setImageBack] = useState(null);
+
+  const handleProvinceChange = (event) => {
+    const province = event.target.value;
+    formik.setFieldValue('province', province);
+    setDistrictOptions(provinceDistricts[province]);
+    formik.setFieldValue('district', ''); // Reset district selection
+  };
 
   return (
     <form className='m-4 flex flex-col border shadow-md rounded-lg p-4' onSubmit={formik.handleSubmit}>
@@ -166,14 +219,44 @@ const UserKyc = () => {
       {formik.values.nationality === 'Nepali' ? (
         <>
           <div>
-            <label htmlFor='verificationNumber'>Citizenship Number</label>
+            <label htmlFor='citizenshipNumber'>Citizenship Number:</label>
             <Input
-              id='verificationNumber'
-              name='verificationNumber'
+              id='citizenshipNumber'
+              name='citizenshipNumber'
               type='text'
               onChange={formik.handleChange}
-              value={formik.values.verificationNumber}
+              value={formik.values.citizenshipNumber}
             />
+          </div>
+          <div>
+            <label htmlFor='province'>Province:</label>
+            <select
+              id='province'
+              name='province'
+              className='form-control state'
+              onChange={handleProvinceChange}
+              value={formik.values.province}
+            >
+              <option value="">Select Province</option>
+              {Object.keys(provinceDistricts).map((province) => (
+                <option key={province} value={province}>{province}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor='district'>District:</label>
+            <select
+              id='district'
+              name='district'
+              className='form-control district'
+              onChange={formik.handleChange}
+              value={formik.values.district}
+            >
+              <option value="">Select District</option>
+              {districtOptions.map((district, index) => (
+                <option key={index} value={district}>{district}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label htmlFor='verificationPhotoFront'>Citizenship Photo Front</label>
@@ -187,13 +270,13 @@ const UserKyc = () => {
       ) : (
         <>
           <div>
-            <label htmlFor='verificationNumber'>Passport Number</label>
+            <label htmlFor='passportNumber'>Passport Number</label>
             <Input
-              id='verificationNumber'
-              name='verificationNumber'
+              id='passportNumber'
+              name='passportNumber'
               type='text'
               onChange={formik.handleChange}
-              value={formik.values.verificationNumber}
+              value={formik.values.passportNumber}
             />
           </div>
           <div>

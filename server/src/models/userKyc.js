@@ -8,9 +8,12 @@ const userKycSchema = new Schema({
   gender: {
     type: String,
     enum: ['male', 'female', 'other'],
-    default: 'female'
+    default: 'male'
   },
-  verificationNumber: String,
+  citizenshipNumber:String,
+  passportNumber: String,
+  provice:String,
+  district:String,
   verificationPhotoFront: String,
   verificationPhotoBack: String,
   nationality: {
