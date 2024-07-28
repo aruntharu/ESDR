@@ -11,9 +11,21 @@ const userKycSchema = new Schema({
     default: 'male'
   },
   citizenshipNumber:String,
+  provinceNepal: String,
+  districtNepal: String,
+  municipalityNepal: String,
+  wardNepal: String,
+  companyWorkNepal: String,
+  coursesNepal: String,
   passportNumber: String,
-  provice:String,
-  district:String,
+  streetAddress:String,
+  city: String,
+  stateProvince: String,
+  postalZipCode: String,
+  county: String,
+  companyWork: String,
+  courses: String,
+  abstract: String,
   verificationPhotoFront: String,
   verificationPhotoBack: String,
   nationality: {
@@ -22,9 +34,7 @@ const userKycSchema = new Schema({
     default: 'Nepali'
   },
   fathersName: String,
-  permanentAddress: String,
   dob: String,
-  temporaryAddress: String,
   kycVerifiedStatus: {
     type: String,
     enum: ['unVerified', 'pending', 'verified'],

@@ -119,66 +119,81 @@ const Page = () => {
         </div>
       </div>
       {selectedUser && (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                {selectedUser.userId}'s KYC Details
-              </ModalHeader>
-              <ModalBody style={{ maxHeight: '80vh', overflowY: 'auto' }}>
-                <p>Full Name: {selectedUser.fullName}</p>
-                <p>Date of Birth: {selectedUser.dob}</p>
-                {selectedUser.nationality === 'Nepali' ? (
-                  <>
-                    <p>Citizenship Number: {selectedUser.citizenshipNumber}</p>
-                  </>
-                ) : (
-                  <>
-                    <p>Passport Number: {selectedUser.passportNumber}</p>
-                  </>
-                )}
-                <p>Permanent Address: {selectedUser.permanentAddress}</p>
-                <p>Temporary Address: {selectedUser.temporaryAddress}</p>
-                <p>Email: {selectedUser.email}</p>
-                <p>Phone Number: {selectedUser.phoneNumber}</p>
-                <p>Verification Front Image</p>
-                <img
-                  onClick={() => {
-                    window.open(
-                      `${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoFront}`,
-                      '_blank'
-                    ).focus();
-                  }}
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoFront}`}
-                />
-                <p>Verification Back Image</p>
-                <img
-                  onClick={() => {
-                    window.open(
-                      `${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoBack}`,
-                      '_blank'
-                    ).focus();
-                  }}
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoBack}`}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="success" onPress={() => handleApprove(selectedUser.userId)}>
-                  Approve
-                </Button>
-                <Button color="danger" onPress={() => handleReject(selectedUser.userId)}>
-                  Reject
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+  <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <ModalContent>
+      {(onClose) => (
+        <>
+          <ModalHeader className="flex flex-col gap-1">
+            {selectedUser.userId}'s KYC Details
+          </ModalHeader>
+          <ModalBody style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+            <p>Full Name: {selectedUser.fullName}</p>
+            <p>Date of Birth: {selectedUser.dob}</p>
+            {selectedUser.nationality === 'Nepali' ? (
+              <>
+                <p>Citizenship Number: {selectedUser.citizenshipNumber}</p>
+                <p>Province: {selectedUser.provinceNepal}</p>
+                <p>District: {selectedUser.districtNepal}</p>
+                <p>Municipality/VDC: {selectedUser.municipalityNepal}</p>
+                <p>Ward: {selectedUser.wardNepal}</p>
+                <p>Company/Work: {selectedUser.companyWorkNepal}</p>
+                <p>Courses: {selectedUser.coursesNepal}</p>
+              </>
+            ) : (
+              <>
+                <p>Passport Number: {selectedUser.passportNumber}</p>
+                <p>Street Address: {selectedUser.streetAddress}</p>
+                <p>City: {selectedUser.city}</p>
+                <p>State/Province: {selectedUser.stateProvince}</p>
+                <p>Postal/Zip Code: {selectedUser.postalZipCode}</p>
+                <p>County: {selectedUser.county}</p>
+                <p>Company/Work: {selectedUser.companyWork}</p>
+                <p>Courses: {selectedUser.courses}</p>
+              </>
+            )}
+            <p>Permanent Address: {selectedUser.permanentAddress}</p>
+            <p>Temporary Address: {selectedUser.temporaryAddress}</p>
+            <p>Email: {selectedUser.email}</p>
+            <p>Phone Number: {selectedUser.phoneNumber}</p>
+            <p>Abstract: {selectedUser.abstract}</p>
+            <p>Verification Front Image</p>
+            <img
+              onClick={() => {
+                window.open(
+                  `${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoFront}`,
+                  '_blank'
+                ).focus();
+              }}
+              src={`${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoFront}`}
+            />
+            <p>Verification Back Image</p>
+            <img
+              onClick={() => {
+                window.open(
+                  `${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoBack}`,
+                  '_blank'
+                ).focus();
+              }}
+              src={`${process.env.NEXT_PUBLIC_API_URL}${selectedUser.verificationPhotoBack}`}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" variant="light" onPress={onClose}>
+              Close
+            </Button>
+            <Button color="success" onPress={() => handleApprove(selectedUser.userId)}>
+              Approve
+            </Button>
+            <Button color="danger" onPress={() => handleReject(selectedUser.userId)}>
+              Reject
+            </Button>
+          </ModalFooter>
+        </>
       )}
+    </ModalContent>
+  </Modal>
+)}
+
     </div>
   );
 };

@@ -33,13 +33,7 @@ const CustomRegistration = () => {
         <div data-aos="fade-up" data-aos-delay="500">
           <h1 className="text-3xl font-bold text-blue-700 mb-2">EIMUN</h1>
           <p className="text-sm text-justify">
-            Having three main motives "Availability, Accessibility, and Affordability", Everest
-            International Model United Nations (EIMUN) has provided an excellent opportunity to
-            develop skills related to debate, research, diplomacy, and leadership. Our mission is to enhance the connectivity between youths, providing international
-            exposure to the diverse background of people. It is not only limited to 5 days
-            residential conference; it includes workshops and discussion sessions prior to the
-            event and skill enhancement that lasts beyond contributing to engaging, educating and
-            empowering youths.
+          Lorem ipsum dolor sit amet consectetur adipiscing elit, nibh sem non cras fames gravida malesuada viverra, ridiculus habitant at primis nullam sapien. Cubilia feugiat varius molestie netus inceptos sodales tortor et in, mi sem aptent est tristique a commodo nam, nulla hac neque magna cras orci justo aenean. Dignissim ligula maecenas nascetur sociosqu quisque tempus vestibulum magna, montes senectus iaculis mollis sociis nec quis, interdum posuere aliquam aliquet tincidunt viverra sapien. Nullam morbi quis arcu accumsan neque consequat ultrices nunc commodo, senectus turpis molestie felis tempus nisl ridiculus penatibus ad, torquent tortor duis erat faucibus primis tincidunt sodales. Habitasse porta eu penatibus sociis libero parturient integer nibh, cum curae facilisis ligula aenean suscipit aliquam, posuere bibendum laoreet proin volutpat ut ad. Inceptos conubia     
           </p>
         </div>
         <div className="flex items-center justify-center" data-aos="fade-up" data-aos-delay="700">

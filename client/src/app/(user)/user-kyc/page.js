@@ -51,8 +51,6 @@ const UserKyc = () => {
     { name: 'gender', label: 'Gender', radioOption: ['male', 'female', 'other'], type: 'radio' },
     { name: 'dob', label: 'Date Of Birth' },
     { name: 'fathersName', label: 'Fathers Name' },
-    { name: 'permanentAddress', label: 'Permanent Address' },
-    { name: 'temporaryAddress', label: 'Temporary Address' },
     { name: 'nationality', label: 'Nationality', radioOption: ['Nepali', 'Foreign'], type: 'radio' }
   ];
 
@@ -66,13 +64,22 @@ const UserKyc = () => {
     phoneNumber: phoneNumber,
     dob: '',
     fathersName: '',
-    permanentAddress: '',
-    temporaryAddress: '',
     nationality: 'Nepali',
     citizenshipNumber: '',
-    province: '',
-    district: '',
-    passportNumber: '',
+    provinceNepal: '',
+    districtNepal: '',
+    municipalityNepal: '',
+    wardNepal: '',
+    companyWorkNepal: '',
+    coursesNepal: '',
+    streetAddress: '',
+    city: '',
+    stateProvince: '',
+    postalZipCode: '',
+    county: '',
+    companyWork: '',
+    courses: '',
+    abstract: '',
     verificationPhotoFront: '',
     verificationPhotoBack: ''
   });
@@ -92,18 +99,27 @@ const UserKyc = () => {
             phoneNumber: data.phoneNumber || phoneNumber,
             dob: data.dob || '',
             fathersName: data.fathersName || '',
-            permanentAddress: data.permanentAddress || '',
-            temporaryAddress: data.temporaryAddress || '',
             nationality: data.nationality || 'Nepali',
             citizenshipNumber: data.citizenshipNumber || '',
-            province: data.province || '',
-            district: data.district || '',
-            passportNumber: data.passportNumber || '',
+            provinceNepal: data.provinceNepal || '',
+            districtNepal: data.districtNepal || '',
+            municipalityNepal: data.municipalityNepal || '',
+            wardNepal: data.wardNepal || '',
+            companyWorkNepal: data.companyWorkNepal || '',
+            coursesNepal: data.coursesNepal || '',
+            streetAddress: data.streetAddress || '',
+            city: data.city || '',
+            stateProvince: data.stateProvince || '',
+            postalZipCode: data.postalZipCode || '',
+            county: data.county || '',
+            companyWork: data.companyWork || '',
+            courses: data.courses || '',
+            abstract: data.abstract || '',
             verificationPhotoFront: '',
             verificationPhotoBack: ''
           });
-          if (data.province) {
-            setDistrictOptions(provinceDistricts[data.province]);
+          if (data.provinceNepal) {
+            setDistrictOptions(provinceDistricts[data.provinceNepal]);
           }
         } catch (error) {
           console.error('Error fetching KYC details:', error);
@@ -145,13 +161,22 @@ const UserKyc = () => {
     formData.append('phoneNumber', values.phoneNumber);
     formData.append('dob', values.dob);
     formData.append('fathersName', values.fathersName);
-    formData.append('permanentAddress', values.permanentAddress);
-    formData.append('temporaryAddress', values.temporaryAddress);
     formData.append('userId', _id);
     formData.append('citizenshipNumber', values.citizenshipNumber);
-    formData.append('province', values.province);
-    formData.append('district', values.district);
-    formData.append('passportNumber', values.passportNumber);
+    formData.append('provinceNepal', values.provinceNepal);
+    formData.append('districtNepal', values.districtNepal);
+    formData.append('municipalityNepal', values.municipalityNepal);
+    formData.append('wardNepal', values.wardNepal);
+    formData.append('companyWorkNepal', values.companyWorkNepal);
+    formData.append('coursesNepal', values.coursesNepal);
+    formData.append('streetAddress', values.streetAddress);
+    formData.append('city', values.city);
+    formData.append('stateProvince', values.stateProvince);
+    formData.append('postalZipCode', values.postalZipCode);
+    formData.append('county', values.county);
+    formData.append('companyWork', values.companyWork);
+    formData.append('courses', values.courses);
+    formData.append('abstract', values.abstract);
     formData.append('front', imageFront);
     formData.append('back', imageBack);
     formData.append('nationality', values.nationality);
@@ -177,10 +202,21 @@ const UserKyc = () => {
   const [imageBack, setImageBack] = useState(null);
 
   const handleProvinceChange = (event) => {
-    const province = event.target.value;
-    formik.setFieldValue('province', province);
-    setDistrictOptions(provinceDistricts[province]);
-    formik.setFieldValue('district', ''); // Reset district selection
+    const provinceNepal = event.target.value;
+    formik.setFieldValue('provinceNepal', provinceNepal);
+    setDistrictOptions(provinceDistricts[provinceNepal]);
+    formik.setFieldValue('districtNepal', ''); // Reset district selection
+  };
+
+  const handleAbstractChange = (event) => {
+    const value = event.target.value;
+    const wordCount = value.trim().split(/\s+/).length;
+
+    if (wordCount <= 450) {
+      formik.setFieldValue('abstract', value);
+    } else {
+      toast.error('Abstract cannot exceed 450 words');
+    }
   };
 
   return (
@@ -229,34 +265,74 @@ const UserKyc = () => {
             />
           </div>
           <div>
-            <label htmlFor='province'>Province:</label>
+            <label htmlFor='provinceNepal'>Province:</label>
             <select
-              id='province'
-              name='province'
+              id='provinceNepal'
+              name='provinceNepal'
               className='form-control state'
               onChange={handleProvinceChange}
-              value={formik.values.province}
+              value={formik.values.provinceNepal}
             >
               <option value="">Select Province</option>
-              {Object.keys(provinceDistricts).map((province) => (
-                <option key={province} value={province}>{province}</option>
+              {Object.keys(provinceDistricts).map((provinceNepal) => (
+                <option key={provinceNepal} value={provinceNepal}>{provinceNepal}</option>
               ))}
             </select>
           </div>
           <div>
-            <label htmlFor='district'>District:</label>
+            <label htmlFor='districtNepal'>District:</label>
             <select
-              id='district'
-              name='district'
-              className='form-control district'
+              id='districtNepal'
+              name='districtNepal'
+              className='form-control districtNepal'
               onChange={formik.handleChange}
-              value={formik.values.district}
+              value={formik.values.districtNepal}
             >
               <option value="">Select District</option>
-              {districtOptions.map((district, index) => (
-                <option key={index} value={district}>{district}</option>
+              {districtOptions.map((districtNepal, index) => (
+                <option key={index} value={districtNepal}>{districtNepal}</option>
               ))}
             </select>
+          </div>
+          <div>
+            <label htmlFor='municipalityNepal'>Municipality/VDC:</label>
+            <Input
+              id='municipalityNepal'
+              name='municipalityNepal'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.municipalityNepal}
+            />
+          </div>
+          <div>
+            <label htmlFor='wardNepal'>Ward:</label>
+            <Input
+              id='wardNepal'
+              name='wardNepal'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.wardNepal}
+            />
+          </div>
+          <div>
+            <label htmlFor='companyWorkNepal'>Company/Work:</label>
+            <Input
+              id='companyWorkNepal'
+              name='companyWorkNepal'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.companyWorkNepal}
+            />
+          </div>
+          <div>
+            <label htmlFor='coursesNepal'>Courses:</label>
+            <Input
+              id='coursesNepal'
+              name='coursesNepal'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.coursesNepal}
+            />
           </div>
           <div>
             <label htmlFor='verificationPhotoFront'>Citizenship Photo Front</label>
@@ -280,16 +356,96 @@ const UserKyc = () => {
             />
           </div>
           <div>
-            <label htmlFor='verificationPhotoFront'>Passport Photo Front</label>
+            <label htmlFor='streetAddress'>Street Address</label>
+            <Input
+              id='streetAddress'
+              name='streetAddress'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.streetAddress}
+            />
+          </div>
+          <div>
+            <label htmlFor='city'>City</label>
+            <Input
+              id='city'
+              name='city'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.city}
+            />
+          </div>
+          <div>
+            <label htmlFor='stateProvince'>State/Province</label>
+            <Input
+              id='stateProvince'
+              name='stateProvince'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.stateProvince}
+            />
+          </div>
+          <div>
+            <label htmlFor='postalZipCode'>Postal/Zip Code</label>
+            <Input
+              id='postalZipCode'
+              name='postalZipCode'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.postalZipCode}
+            />
+          </div>
+          <div>
+            <label htmlFor='county'>County</label>
+            <Input
+              id='county'
+              name='county'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.county}
+            />
+          </div>
+          <div>
+            <label htmlFor='companyWork'>Company/Work:</label>
+            <Input
+              id='companyWork'
+              name='companyWork'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.companyWork}
+            />
+          </div>
+          <div>
+            <label htmlFor='courses'>Courses:</label>
+            <Input
+              id='courses'
+              name='courses'
+              type='text'
+              onChange={formik.handleChange}
+              value={formik.values.courses}
+            />
+          </div>
+          <div>
+            <label htmlFor='verificationPhotoFront'>Verification Photo Front</label>
             <input type="file" onChange={(e) => setImageFront(e.target.files[0])} />
           </div>
           <div>
-            <label htmlFor='verificationPhotoBack'>Passport Photo Back</label>
+            <label htmlFor='verificationPhotoBack'>Verification Photo Back</label>
             <input type="file" onChange={(e) => setImageBack(e.target.files[0])} />
           </div>
         </>
       )}
-
+      <div>
+        <label htmlFor='abstract'>Abstract (max 450 words):</label>
+        <Input
+          id='abstract'
+          name='abstract'
+          type='text'
+          rows='4'
+          onChange={handleAbstractChange}
+          value={formik.values.abstract}
+        />
+      </div>
       <button className='bg-green-500 text-white rounded p-2 my-4 w-[20%]' type="submit">Submit</button>
     </form>
   );
