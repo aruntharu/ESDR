@@ -46,7 +46,7 @@ const Page = () => {
       {/* Banner Section */}
       <div className="relative w-full h-64 overflow-hidden banner">
         <Image
-          src="/banner.jpeg" // Path to your image in the public folder
+          src="/upload/29.jpg" // Path to your image in the public folder
           alt="Committee Banner"
           layout="fill"
           objectFit="cover"

@@ -134,3 +134,6 @@ uploads
 **/uploads/newsImage
 **/uploads/committee
 **/uploads/esdrImage
+
+upload
+**/public/upload

@@ -11,7 +11,7 @@ const CustomCarousel = () => {
 
   const slides = [
     {
-      src: '/1.jpg', // replace with the correct path to your image
+      src: '/upload/carousel1.JPG', // replace with the correct path to your image
       alt: 'First slide',
       caption: {
         title: 'Kathmandu School of Law',
@@ -20,7 +20,7 @@ const CustomCarousel = () => {
       },
     },
     {
-      src: '/2.jpg', // replace with the correct path to your image
+      src: '/upload/carousel2.JPG', // replace with the correct path to your image
       alt: 'Second slide',
       caption: {
         title: 'Kathmandu School of Law',
@@ -73,7 +73,7 @@ const CustomCarousel = () => {
             />
             <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
               <div className="text-center text-white space-y-4">
-                <h6 className="text-secondary text-lg" data-aos="fade-up">
+                <h6 className="text-[#83b4c1] text-2xl md:text-3xl lg:text-4xl" data-aos="fade-up">
                   {slide.caption.title}
                 </h6>
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold" data-aos="fade-right">
@@ -83,19 +83,19 @@ const CustomCarousel = () => {
                   {slide.caption.text}
                 </p>
                 <div className="space-x-4">
-                  <Link href="/readmore">
+                  <Link href="/connectwithus">
                     <button
                       type="button"
-                      className="px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg"
+                      className="px-4 py-3 bg-[#175459] hover:bg-[#0d2e31] text-white font-semibold rounded-lg"
                       data-aos="fade-left"
                     >
-                      Read More
+                      Apply Now
                     </button>
                   </Link>
                   <Link href="/contactus">
                     <button
                       type="button"
-                      className="px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg"
+                      className="px-4 py-3 bg-[#83b4c1] hover:bg-[#618b96] text-white font-semibold rounded-lg"
                       data-aos="fade-right"
                     >
                       Contact Us

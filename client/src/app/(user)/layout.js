@@ -25,11 +25,11 @@ const layout = ({ children }) => {
   const { kycVerifiedStatus ,userDetails} = useSelector((state) => state.user);
   const generateKycDiv = ()=>{
     if(kycVerifiedStatus=== 'unVerified'){
-       return <p className='p-2 bg-orange-100 rounded-lg text-md'> ⚠️ User KYC is not verified. <Link href="/user-kyc">Verify Now</Link> </p>
+       return <p className='p-2 bg-orange-100 rounded-lg text-md'> ⚠️Join 16th ESDR. <Link href="/user-kyc">Please Register Now</Link> </p>
     }else if(kycVerifiedStatus === 'pending'){
-      return <p className='p-2 bg-orange-100 rounded-lg text-md'>Submitted<Link href="/user-kyc">Edit Now</Link> </p>
+      return <p className='p-2 bg-orange-100 rounded-lg text-md'>Submitted, Wait for form verification<Link href="/user-kyc">For Correction: Edit Now</Link> </p>
     }else if(kycVerifiedStatus === 'rejected'){
-      return <p className='p-2 bg-orange-100 rounded-lg text-md'> Your KYC was rejected. <Link href="/user-kyc">Re-submit Now</Link> </p>
+      return <p className='p-2 bg-orange-100 rounded-lg text-md'> Your Registration Form was rejected. <Link href="/user-kyc">Re-submit Now</Link> </p>
     }
   }
   return (
@@ -54,7 +54,7 @@ const layout = ({ children }) => {
                   color="secondary"
                   name="Jason Hughes"
                   size="sm"
-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                  src="/logo.png"
                 />
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="flat">

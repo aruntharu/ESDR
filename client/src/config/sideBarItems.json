@@ -9,6 +9,7 @@
         {"id":1, "name": "News", "link": "/newslist"},
         {"id":1, "name": "Videos", "link": "/add-videos"},
         {"id":1, "name": "Contact Us", "link": "/contact"},
+        {"id":1, "name": "Subscribe", "link": "/subscribelist"},
         {"id":1, "name": "Notice", "link": "/add-notice"}
 
         
@@ -17,7 +18,7 @@
         {"id":1, "name": "Dashboard", "link": "/dashboard"},
         {"id":1, "name": "Notice", "link": "/notice"},
         {"id":1, "name": "Registration", "link": "/registration"},
-        {"id":1, "name": "Payment", "link": "/payment"}
+        {"id":1, "name": "Payment", "link": "/user-payment"}
         
     
     ]

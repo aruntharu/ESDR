@@ -7,7 +7,6 @@ import CustomPrograms from '@/components/programs/page';
 import ScrollToTop from '@/components/scrollToTop/page';
 import Footer from '@/components/footer/page';
 import FactSection from '@/components/fact/page';
-import CustomRegistration from '@/components/registration/page';
 
 
 const Home = () => {
@@ -15,7 +14,6 @@ const Home = () => {
     <div>
       <CustomNavBar />
       <CustomCarousel />
-      <CustomRegistration/>
       <CustomAboutUs />
       <FactSection/>
       <CustomPrograms />  

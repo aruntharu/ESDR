@@ -137,6 +137,7 @@ const Page = () => {
                 <p>Municipality/VDC: {selectedUser.municipalityNepal}</p>
                 <p>Ward: {selectedUser.wardNepal}</p>
                 <p>Company/Work: {selectedUser.companyWorkNepal}</p>
+                <p>College/University: {selectedUser.collegeUniversityNepal}</p>
                 <p>Courses: {selectedUser.coursesNepal}</p>
               </>
             ) : (

@@ -2,3 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 @import 'aos/dist/aos.css';
+.react-flip-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .react-flip-page article {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+  }
+  

@@ -30,7 +30,7 @@ const CustomPrograms = () => {
     <div className="container mx-auto py-16 px-4">
       <div className="text-center mb-12" data-aos="fade-up">
         <h5 className="text-primary text-lg font-semibold">Our Programs</h5>
-        <h1 className="text-4xl font-bold">Kathmandu School of Law</h1>
+        <h1 className="text-4xl font-bold">ESDR</h1>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {customPrograms.map((service, index) => (

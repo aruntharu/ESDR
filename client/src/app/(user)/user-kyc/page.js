@@ -7,6 +7,9 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { setUserKycVerifiedStatus } from '@/redux/reducerSlices/userSlice';
 import { useRouter } from 'next/navigation';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { format, parse } from 'date-fns';
 
 const provinceDistricts = {
   Koshi: [
@@ -45,13 +48,13 @@ const UserKyc = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const userDetailsKyc = [
-    { name: 'email', label: 'Email' },
-    { name: 'fullName', label: 'Full Name' },
-    { name: 'phoneNumber', label: 'Phone Number' },
-    { name: 'gender', label: 'Gender', radioOption: ['male', 'female', 'other'], type: 'radio' },
-    { name: 'dob', label: 'Date Of Birth' },
-    { name: 'fathersName', label: 'Fathers Name' },
-    { name: 'nationality', label: 'Nationality', radioOption: ['Nepali', 'Foreign'], type: 'radio' }
+    { name: 'fullName', label: 'Applicant Full Name:' },
+    { name: 'email', label: 'Applicant Email:' },
+    { name: 'phoneNumber', label: 'Phone Number:' },
+    { name: 'gender', label: 'Gender:', radioOption: ['male', 'female', 'other'], type: 'radio' },
+    { name: 'dob', label: 'Birth Date:' },
+    { name: 'fathersName', label: 'Fathers Name:' },
+    { name: 'nationality', label: 'Nationality:', radioOption: ['Nepali', 'International'], type: 'radio' }
   ];
 
   const { kycVerifiedStatus, userDetails } = useSelector((state) => state.user);
@@ -70,8 +73,10 @@ const UserKyc = () => {
     districtNepal: '',
     municipalityNepal: '',
     wardNepal: '',
+    collegeUniversityNepal: '',
     companyWorkNepal: '',
     coursesNepal: '',
+    passportNumber: '',
     streetAddress: '',
     city: '',
     stateProvince: '',
@@ -83,8 +88,6 @@ const UserKyc = () => {
     verificationPhotoFront: '',
     verificationPhotoBack: ''
   });
-
-  const [districtOptions, setDistrictOptions] = useState([]);
 
   useEffect(() => {
     const fetchKycDetails = async () => {
@@ -105,22 +108,25 @@ const UserKyc = () => {
             districtNepal: data.districtNepal || '',
             municipalityNepal: data.municipalityNepal || '',
             wardNepal: data.wardNepal || '',
+            collegeUniversityNepal: data.collegeUniversityNepal || '',
             companyWorkNepal: data.companyWorkNepal || '',
             coursesNepal: data.coursesNepal || '',
+            passportNumber: data.passportNumber || '',
             streetAddress: data.streetAddress || '',
             city: data.city || '',
             stateProvince: data.stateProvince || '',
             postalZipCode: data.postalZipCode || '',
             county: data.county || '',
+            collegeUniversity: data.collegeUniversity || '',
             companyWork: data.companyWork || '',
             courses: data.courses || '',
             abstract: data.abstract || '',
             verificationPhotoFront: '',
             verificationPhotoBack: ''
           });
-          if (data.provinceNepal) {
-            setDistrictOptions(provinceDistricts[data.provinceNepal]);
-          }
+          // if (data.provinceNepal) {
+          //   setDistrictOptions(provinceDistricts[data.provinceNepal]);
+          // }
         } catch (error) {
           console.error('Error fetching KYC details:', error);
         }
@@ -167,13 +173,16 @@ const UserKyc = () => {
     formData.append('districtNepal', values.districtNepal);
     formData.append('municipalityNepal', values.municipalityNepal);
     formData.append('wardNepal', values.wardNepal);
+    formData.append('collegeUniversityNepal', values.collegeUniversityNepal);
     formData.append('companyWorkNepal', values.companyWorkNepal);
     formData.append('coursesNepal', values.coursesNepal);
+    formData.append('passportNumber', values.passportNumber);
     formData.append('streetAddress', values.streetAddress);
     formData.append('city', values.city);
     formData.append('stateProvince', values.stateProvince);
     formData.append('postalZipCode', values.postalZipCode);
     formData.append('county', values.county);
+    formData.append('collegeUniversity', values.collegeUniversity);
     formData.append('companyWork', values.companyWork);
     formData.append('courses', values.courses);
     formData.append('abstract', values.abstract);
@@ -200,11 +209,12 @@ const UserKyc = () => {
 
   const [imageFront, setImageFront] = useState(null);
   const [imageBack, setImageBack] = useState(null);
+  const [startDate, setStartDate] = useState(null);
 
   const handleProvinceChange = (event) => {
     const provinceNepal = event.target.value;
     formik.setFieldValue('provinceNepal', provinceNepal);
-    setDistrictOptions(provinceDistricts[provinceNepal]);
+    // setDistrictOptions(provinceDistricts[provinceNepal]);
     formik.setFieldValue('districtNepal', ''); // Reset district selection
   };
 
@@ -214,239 +224,323 @@ const UserKyc = () => {
 
     if (wordCount <= 450) {
       formik.setFieldValue('abstract', value);
+      formik.setFieldTouched('abstract', true);
     } else {
       toast.error('Abstract cannot exceed 450 words');
     }
   };
 
-  return (
-    <form className='m-4 flex flex-col border shadow-md rounded-lg p-4' onSubmit={formik.handleSubmit}>
-      {userDetailsKyc.map((item) => {
-        if (item.type === 'radio') {
-          return (
-            <RadioGroup
-              key={item.name}
-              label={item.label}
-              name={item.name}
-              type={item.type}
-              onChange={formik.handleChange}
-              value={formik.values[item.name]} // Correctly bind value to formik
-            >
-              {item.radioOption.map((val) => (
-                <Radio key={val} value={val}>{val}</Radio>
-              ))}
-            </RadioGroup>
-          );
-        }
-        return (
-          <div key={item.name}>
-            <label htmlFor={item.name}>{item.label}</label>
-            <Input
-              id={item.name}
-              name={item.name}
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values[item.name]}
-            />
-          </div>
-        );
-      })}
+  const handleDateChange = (date) => {
+    setStartDate(date);
+    formik.setFieldValue('dob', date ? format(date, 'dd/MM/yyyy') : '');
+  };
 
-      {formik.values.nationality === 'Nepali' ? (
-        <>
-          <div>
-            <label htmlFor='citizenshipNumber'>Citizenship Number:</label>
-            <Input
-              id='citizenshipNumber'
-              name='citizenshipNumber'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.citizenshipNumber}
-            />
-          </div>
-          <div>
-            <label htmlFor='provinceNepal'>Province:</label>
-            <select
-              id='provinceNepal'
-              name='provinceNepal'
-              className='form-control state'
-              onChange={handleProvinceChange}
-              value={formik.values.provinceNepal}
-            >
-              <option value="">Select Province</option>
-              {Object.keys(provinceDistricts).map((provinceNepal) => (
-                <option key={provinceNepal} value={provinceNepal}>{provinceNepal}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor='districtNepal'>District:</label>
-            <select
-              id='districtNepal'
-              name='districtNepal'
-              className='form-control districtNepal'
-              onChange={formik.handleChange}
-              value={formik.values.districtNepal}
-            >
-              <option value="">Select District</option>
-              {districtOptions.map((districtNepal, index) => (
-                <option key={index} value={districtNepal}>{districtNepal}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor='municipalityNepal'>Municipality/VDC:</label>
-            <Input
-              id='municipalityNepal'
-              name='municipalityNepal'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.municipalityNepal}
-            />
-          </div>
-          <div>
-            <label htmlFor='wardNepal'>Ward:</label>
-            <Input
-              id='wardNepal'
-              name='wardNepal'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.wardNepal}
-            />
-          </div>
-          <div>
-            <label htmlFor='companyWorkNepal'>Company/Work:</label>
-            <Input
-              id='companyWorkNepal'
-              name='companyWorkNepal'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.companyWorkNepal}
-            />
-          </div>
-          <div>
-            <label htmlFor='coursesNepal'>Courses:</label>
-            <Input
-              id='coursesNepal'
-              name='coursesNepal'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.coursesNepal}
-            />
-          </div>
-          <div>
-            <label htmlFor='verificationPhotoFront'>Citizenship Photo Front</label>
-            <input type="file" onChange={(e) => setImageFront(e.target.files[0])} />
-          </div>
-          <div>
-            <label htmlFor='verificationPhotoBack'>Citizenship Photo Back</label>
-            <input type="file" onChange={(e) => setImageBack(e.target.files[0])} />
-          </div>
-        </>
-      ) : (
-        <>
-          <div>
-            <label htmlFor='passportNumber'>Passport Number</label>
-            <Input
-              id='passportNumber'
-              name='passportNumber'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.passportNumber}
-            />
-          </div>
-          <div>
-            <label htmlFor='streetAddress'>Street Address</label>
-            <Input
-              id='streetAddress'
-              name='streetAddress'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.streetAddress}
-            />
-          </div>
-          <div>
-            <label htmlFor='city'>City</label>
-            <Input
-              id='city'
-              name='city'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.city}
-            />
-          </div>
-          <div>
-            <label htmlFor='stateProvince'>State/Province</label>
-            <Input
-              id='stateProvince'
-              name='stateProvince'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.stateProvince}
-            />
-          </div>
-          <div>
-            <label htmlFor='postalZipCode'>Postal/Zip Code</label>
-            <Input
-              id='postalZipCode'
-              name='postalZipCode'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.postalZipCode}
-            />
-          </div>
-          <div>
-            <label htmlFor='county'>County</label>
-            <Input
-              id='county'
-              name='county'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.county}
-            />
-          </div>
-          <div>
-            <label htmlFor='companyWork'>Company/Work:</label>
-            <Input
-              id='companyWork'
-              name='companyWork'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.companyWork}
-            />
-          </div>
-          <div>
-            <label htmlFor='courses'>Courses:</label>
-            <Input
-              id='courses'
-              name='courses'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.courses}
-            />
-          </div>
-          <div>
-            <label htmlFor='verificationPhotoFront'>Verification Photo Front</label>
-            <input type="file" onChange={(e) => setImageFront(e.target.files[0])} />
-          </div>
-          <div>
-            <label htmlFor='verificationPhotoBack'>Verification Photo Back</label>
-            <input type="file" onChange={(e) => setImageBack(e.target.files[0])} />
-          </div>
-        </>
-      )}
-      <div>
-        <label htmlFor='abstract'>Abstract (max 450 words):</label>
-        <Input
-          id='abstract'
-          name='abstract'
-          type='text'
-          rows='4'
-          onChange={handleAbstractChange}
-          value={formik.values.abstract}
-        />
+  return (
+    <form className='m-4 flex flex-col border shadow-md rounded-lg p-4 bg-white relative' onSubmit={formik.handleSubmit}>
+      <div className="absolute inset-0 z-0">
+        <img src="/esdr.jpg" alt="background" className="w-full h-full object-cover opacity-25" />
       </div>
-      <button className='bg-green-500 text-white rounded p-2 my-4 w-[20%]' type="submit">Submit</button>
+      <div className="relative z-10">
+        <h1 id="header_1" className="text-3xl font-bold my-4">Registration Form</h1>
+        <div className="text-lg font-medium mb-8">Fill out the form carefully for registration</div>
+        {userDetailsKyc.map((item) => {
+          if (item.type === 'radio') {
+            return (
+              <div className="grid grid-cols-1 gap-2 mb-4" key={item.name}>
+                <label htmlFor={item.name}>{item.label}</label>
+                <RadioGroup
+                  label={item.label}
+                  name={item.name}
+                  type={item.type}
+                  onChange={formik.handleChange}
+                  value={formik.values[item.name]} // Correctly bind value to formik
+                  className="w-2/5"
+                >
+                  {item.radioOption.map((val) => (
+                    <Radio key={val} value={val}>{val}</Radio>
+                  ))}
+                </RadioGroup>
+              </div>
+            );
+          }
+          return (
+            <div className="grid grid-cols-1 gap-2 mb-4" key={item.name}>
+              <label htmlFor={item.name}>{item.label}</label>
+              {item.name === 'dob' ? (
+                <DatePicker
+                  id={item.name}
+                  name={item.name}
+                  selected={startDate}
+                  onChange={handleDateChange}
+                  dateFormat="dd/MM/yyyy"
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  customInput={
+                    <Input
+                      name={item.name}
+                      value={formik.values[item.name]}
+                      onChange={formik.handleChange}
+                      className="w-4/5 border-black bg-white"
+                    />
+                  }
+                />
+              ) : (
+                <Input
+                  id={item.name}
+                  name={item.name}
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values[item.name]}
+                  className={item.name === 'fullName' || item.name === 'fathersName' ? "w-3/5 border-black bg-white" : item.name === 'dob' ? "w-4/5 border-black bg-white" : "w-2/5 border-black bg-white"}
+                />
+              )}
+            </div>
+          );
+        })}
+
+        {formik.values.nationality === 'Nepali' ? (
+          <>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <label htmlFor='citizenshipNumber'>Citizenship Number:</label>
+                <Input
+                  id='citizenshipNumber'
+                  name='citizenshipNumber'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.citizenshipNumber}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div></div>
+              <div>
+                <label htmlFor='provinceNepal'>Province:</label>
+                <select
+                  id='provinceNepal'
+                  name='provinceNepal'
+                  className='form-control state w-full'
+                  onChange={handleProvinceChange}
+                  value={formik.values.provinceNepal}
+                >
+                  <option value="">Select Province</option>
+                  {/* Object.keys(provinceDistricts).map((provinceNepal) => (
+                    <option key={provinceNepal} value={provinceNepal}>{provinceNepal}</option>
+                  )) */}
+                </select>
+              </div>
+              <div>
+                <label htmlFor='districtNepal'>District:</label>
+                <select
+                  id='districtNepal'
+                  name='districtNepal'
+                  className='form-control districtNepal w-full'
+                  onChange={formik.handleChange}
+                  value={formik.values.districtNepal}
+                >
+                  <option value="">Select District</option>
+                  {/* districtOptions.map((districtNepal, index) => (
+                    <option key={index} value={districtNepal}>{districtNepal}</option>
+                  )) */}
+                </select>
+              </div>
+              <div>
+                <label htmlFor='municipalityNepal'>Municipality/VDC:</label>
+                <Input
+                  id='municipalityNepal'
+                  name='municipalityNepal'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.municipalityNepal}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='wardNepal'>Ward:</label>
+                <Input
+                  id='wardNepal'
+                  name='wardNepal'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.wardNepal}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='collegeUniversityNepal'>College/University:</label>
+                <Input
+                  id='collegeUniversityNepal'
+                  name='collegeUniversityNepal'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.collegeUniversityNepal}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='companyWorkNepal'>Company/Work:</label>
+                <Input
+                  id='companyWorkNepal'
+                  name='companyWorkNepal'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.companyWorkNepal}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='coursesNepal'>Courses:</label>
+                <Input
+                  id='coursesNepal'
+                  name='coursesNepal'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.coursesNepal}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div></div>
+              <div>
+                <label htmlFor='verificationPhotoFront'>Citizenship Photo Front</label>
+                <input type="file" className="w-full border-black bg-white" onChange={(e) => setImageFront(e.target.files[0])} />
+              </div>
+              <div>
+                <label htmlFor='verificationPhotoBack'>Citizenship Photo Back</label>
+                <input type="file" className="w-full border-black bg-white" onChange={(e) => setImageBack(e.target.files[0])} />
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <label htmlFor='passportNumber'>Passport Number</label>
+                <Input
+                  id='passportNumber'
+                  name='passportNumber'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.passportNumber}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div></div>
+              <div>
+                <label htmlFor='streetAddress'>Street Address</label>
+                <Input
+                  id='streetAddress'
+                  name='streetAddress'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.streetAddress}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='city'>City</label>
+                <Input
+                  id='city'
+                  name='city'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.city}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='stateProvince'>State/Province</label>
+                <Input
+                  id='stateProvince'
+                  name='stateProvince'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.stateProvince}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='postalZipCode'>Postal/Zip Code</label>
+                <Input
+                  id='postalZipCode'
+                  name='postalZipCode'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.postalZipCode}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='county'>County</label>
+                <Input
+                  id='county'
+                  name='county'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.county}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='collegeUniversity'>College/University:</label>
+                <Input
+                  id='collegeUniversity'
+                  name='collegeUniversity'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.collegeUniversity}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='companyWork'>Company/Work:</label>
+                <Input
+                  id='companyWork'
+                  name='companyWork'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.companyWork}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='courses'>Courses:</label>
+                <Input
+                  id='courses'
+                  name='courses'
+                  type='text'
+                  onChange={formik.handleChange}
+                  value={formik.values.courses}
+                  className="w-full border-black bg-white"
+                />
+              </div>
+              <div>
+                <label htmlFor='verificationPhotoFront'>Verification Photo Front</label>
+                <input type="file" className="w-full border-black bg-white" onChange={(e) => setImageFront(e.target.files[0])} />
+              </div>
+              <div>
+                <label htmlFor='verificationPhotoBack'>Verification Photo Back</label>
+                <input type="file" className="w-full border-black bg-white" onChange={(e) => setImageBack(e.target.files[0])} />
+              </div>
+            </div>
+          </>
+        )}
+        <div className="grid grid-cols-1 gap-2 mb-4">
+          <label htmlFor='abstract'>Abstract (max 450 words):</label>
+          <textarea
+            id='abstract'
+            name='abstract'
+            rows='4'
+            onChange={handleAbstractChange}
+            value={formik.values.abstract}
+            className="form-textarea mt-1 block w-2/5 border-black bg-white"
+            style={{ resize: 'none' }}
+          />
+          {formik.touched.abstract && (
+            <p className="text-right text-gray-500">{formik.values.abstract.trim().split(/\s+/).length} / 450 words</p>
+          )}
+        </div>
+        <button className='bg-green-500 text-white rounded p-2 my-4 w-[20%]' type="submit">Submit</button>
+      </div>
     </form>
   );
 };
