@@ -1,37 +1,50 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = { 
-    isLoggedIn: false,
-    token: '',
-    kycVerifiedStatus: '',
-    userDetails: {}
-}
+  isLoggedIn: false,
+  token: '',
+  kycVerifiedStatus: '',
+  paymentVerifiedStatus: '',
+  paymentDetails: {},
+  userDetails: {}
+};
 
 const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
-    setLoginDetails(state, actions) {
-        const {user, token} = actions.payload
-       return {
-        ...state,
-        isLoggedIn: true,
-        token: token,
-        userDetails: user
-       }
+    setLoginDetails(state, action) {
+      const { user, token } = action.payload;
+      state.isLoggedIn = true;
+      state.token = token;
+      state.userDetails = user;
     },
-
-    logoutUser(state, actions) {
-           return initialState
+    logoutUser() {
+      return initialState;
     },
-    setUserKycVerifiedStatus(state, actions) {
-      return {
-        ...state,
-        kycVerifiedStatus: actions.payload
-      }
-},
-  },
-})
+    setUserKycVerifiedStatus(state, action) {
+      state.kycVerifiedStatus = action.payload;
+    },
+    setPaymentVerifiedStatus(state, action) {
+      state.paymentVerifiedStatus = action.payload;
+    },
+    setPaymentDetails(state, action) {
+      state.paymentDetails = action.payload;
+    },
+    clearPaymentState(state) {
+      state.paymentVerifiedStatus = '';
+      state.paymentDetails = {};
+    }
+  }
+});
 
-export const{ setLoginDetails, logoutUser,setUserKycVerifiedStatus } = userSlice.actions
-export default userSlice.reducer
+export const { 
+  setLoginDetails, 
+  logoutUser, 
+  setUserKycVerifiedStatus, 
+  setPaymentVerifiedStatus, 
+  setPaymentDetails, 
+  clearPaymentState 
+} = userSlice.actions;
+
+export default userSlice.reducer;

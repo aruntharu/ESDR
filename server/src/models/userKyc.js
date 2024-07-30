@@ -35,7 +35,7 @@ const userKycSchema = new Schema({
     enum: ['Nepali', 'Foreign'],
     default: 'Nepali'
   },
-  fathersName: String,
+  fatherName: String,
   dob: String,
   kycVerifiedStatus: {
     type: String,

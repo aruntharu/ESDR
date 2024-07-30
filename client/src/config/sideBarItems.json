@@ -1,6 +1,7 @@
 {
     "admin": [
         {"id":1, "name": "Dashboard", "link": "/admin-dashboard"},
+        {"id":1, "name": "Applicant", "link": "/applicant"},
         {"id":1, "name": "Verify Registration", "link": "/verify-kyc"},
         {"id":1, "name": "Verify Payment", "link": "/verify-payment"},
         {"id":1, "name": "Message", "link": "/messagelist"},

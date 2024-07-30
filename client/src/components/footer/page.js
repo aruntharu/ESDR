@@ -16,7 +16,7 @@ const Footer = () => {
         <div>
           <div className="flex items-center">
             <Image src="/logo1.png" width={120} height={90} alt="logo" />
-            <Image src="/upload/ksl.png" width={160} height={160} alt="ksl logo" className="ml-8" />
+            <Image src="/ksl1.png" width={100} height={100} alt="ksl logo" className="ml-8" />
           </div>
           <p className="mt-4 text-gray-300">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
@@ -32,10 +32,10 @@ const Footer = () => {
                 <FaFacebookF className="text-2xl text-gray-300 hover:text-white" />
               </a>
             </Link>
-            <Link href="https://instagram.com">
+            <Link href="https://www.instagram.com/ksl_nepal/">
               <FaInstagram className="text-2xl text-gray-300 hover:text-white" />
             </Link>
-            <Link href="https://linkedin.com">
+            <Link href="https://www.linkedin.com/school/kathmanduschooloflaw/">
               <FaLinkedinIn className="text-2xl text-gray-300 hover:text-white" />
             </Link>
           </div>

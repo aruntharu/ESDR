@@ -10,7 +10,7 @@ const CustomNavBar = () => {
   const menuItems = [
     { id: 1, name: "Home", link: "/home" },
     { id: 2, name: "About Us", link: "/aboutus" },
-    { id: 3, name: "Committee", link: "/committee" },
+    //{ id: 3, name: "Committee", link: "/committee" },
     { id: 4, name: "ESDR 2024", link: "/esdr" },
     { id: 5, name: "Past Events", link: "/news" },
     { id: 6, name: "Contact Us", link: "/contactus" },

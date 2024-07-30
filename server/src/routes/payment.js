@@ -2,11 +2,10 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const { addPayment, getAllPayment, deletePaymentById, getPaymentDetailsById } = require('../controllers/payment');
+const { addPayment, getAllPayment, deletePaymentById, getPaymentDetailsById, approvePayment, rejectPayment } = require('../controllers/payment');
 
 const router = express.Router();
 
-// Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/paymentImage/');
@@ -18,9 +17,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('/payment', upload.array('paymentImages', 10), addPayment); // Allow up to 10 files
+router.post('/payment', upload.array('paymentImages', 10), addPayment);
 router.get('/payment', getAllPayment);
 router.delete('/payment/:id', deletePaymentById);
 router.get('/payment/:id', getPaymentDetailsById);
+router.put('/payment/approve', approvePayment);
+router.put('/payment/reject', rejectPayment);
 
 module.exports = router;

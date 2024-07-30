@@ -9,7 +9,7 @@ import { setUserKycVerifiedStatus } from '@/redux/reducerSlices/userSlice';
 import { useRouter } from 'next/navigation';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { format, parse } from 'date-fns';
+import { format } from 'date-fns';
 
 const provinceDistricts = {
   Koshi: [
@@ -53,7 +53,7 @@ const UserKyc = () => {
     { name: 'phoneNumber', label: 'Phone Number:' },
     { name: 'gender', label: 'Gender:', radioOption: ['male', 'female', 'other'], type: 'radio' },
     { name: 'dob', label: 'Birth Date:' },
-    { name: 'fathersName', label: 'Fathers Name:' },
+    { name: 'fatherName', label: 'Father Name:' },
     { name: 'nationality', label: 'Nationality:', radioOption: ['Nepali', 'International'], type: 'radio' }
   ];
 
@@ -66,7 +66,7 @@ const UserKyc = () => {
     gender: gender,
     phoneNumber: phoneNumber,
     dob: '',
-    fathersName: '',
+    fatherName: '',
     nationality: 'Nepali',
     citizenshipNumber: '',
     provinceNepal: '',
@@ -101,7 +101,7 @@ const UserKyc = () => {
             gender: data.gender || gender,
             phoneNumber: data.phoneNumber || phoneNumber,
             dob: data.dob || '',
-            fathersName: data.fathersName || '',
+            fatherName: data.fatherName || '',
             nationality: data.nationality || 'Nepali',
             citizenshipNumber: data.citizenshipNumber || '',
             provinceNepal: data.provinceNepal || '',
@@ -124,9 +124,6 @@ const UserKyc = () => {
             verificationPhotoFront: '',
             verificationPhotoBack: ''
           });
-          // if (data.provinceNepal) {
-          //   setDistrictOptions(provinceDistricts[data.provinceNepal]);
-          // }
         } catch (error) {
           console.error('Error fetching KYC details:', error);
         }
@@ -166,7 +163,7 @@ const UserKyc = () => {
     formData.append('fullName', values.fullName);
     formData.append('phoneNumber', values.phoneNumber);
     formData.append('dob', values.dob);
-    formData.append('fathersName', values.fathersName);
+    formData.append('fatherName', values.fatherName);
     formData.append('userId', _id);
     formData.append('citizenshipNumber', values.citizenshipNumber);
     formData.append('provinceNepal', values.provinceNepal);
@@ -214,7 +211,6 @@ const UserKyc = () => {
   const handleProvinceChange = (event) => {
     const provinceNepal = event.target.value;
     formik.setFieldValue('provinceNepal', provinceNepal);
-    // setDistrictOptions(provinceDistricts[provinceNepal]);
     formik.setFieldValue('districtNepal', ''); // Reset district selection
   };
 
@@ -237,9 +233,6 @@ const UserKyc = () => {
 
   return (
     <form className='m-4 flex flex-col border shadow-md rounded-lg p-4 bg-white relative' onSubmit={formik.handleSubmit}>
-      <div className="absolute inset-0 z-0">
-        <img src="/esdr.jpg" alt="background" className="w-full h-full object-cover opacity-25" />
-      </div>
       <div className="relative z-10">
         <h1 id="header_1" className="text-3xl font-bold my-4">Registration Form</h1>
         <div className="text-lg font-medium mb-8">Fill out the form carefully for registration</div>
@@ -253,7 +246,7 @@ const UserKyc = () => {
                   name={item.name}
                   type={item.type}
                   onChange={formik.handleChange}
-                  value={formik.values[item.name]} // Correctly bind value to formik
+                  value={formik.values[item.name]}
                   className="w-2/5"
                 >
                   {item.radioOption.map((val) => (
@@ -292,7 +285,7 @@ const UserKyc = () => {
                   type='text'
                   onChange={formik.handleChange}
                   value={formik.values[item.name]}
-                  className={item.name === 'fullName' || item.name === 'fathersName' ? "w-3/5 border-black bg-white" : item.name === 'dob' ? "w-4/5 border-black bg-white" : "w-2/5 border-black bg-white"}
+                  className={item.name === 'fullName' || item.name === 'fatherName' ? "w-3/5 border-black bg-white" : item.name === 'dob' ? "w-1/5 border-black bg-white" : "w-2/5 border-black bg-white"}
                 />
               )}
             </div>
@@ -324,9 +317,9 @@ const UserKyc = () => {
                   value={formik.values.provinceNepal}
                 >
                   <option value="">Select Province</option>
-                  {/* Object.keys(provinceDistricts).map((provinceNepal) => (
+                  {Object.keys(provinceDistricts).map((provinceNepal) => (
                     <option key={provinceNepal} value={provinceNepal}>{provinceNepal}</option>
-                  )) */}
+                  ))}
                 </select>
               </div>
               <div>
@@ -339,9 +332,9 @@ const UserKyc = () => {
                   value={formik.values.districtNepal}
                 >
                   <option value="">Select District</option>
-                  {/* districtOptions.map((districtNepal, index) => (
+                  {provinceDistricts[formik.values.provinceNepal]?.map((districtNepal, index) => (
                     <option key={index} value={districtNepal}>{districtNepal}</option>
-                  )) */}
+                  ))}
                 </select>
               </div>
               <div>
