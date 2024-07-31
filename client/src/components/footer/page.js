@@ -16,12 +16,18 @@ const Footer = () => {
         <div>
           <div className="flex items-center">
             <Image src="/logo1.png" width={120} height={90} alt="logo" />
-            <Image src="/ksl1.png" width={100} height={100} alt="ksl logo" className="ml-8" />
+            <Image
+              src="/ksl1.png"
+              width={100}
+              height={100}
+              alt="ksl logo"
+              className="ml-8"
+            />
           </div>
           <p className="mt-4 text-gray-300">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-            facere delectus qui placeat inventore consectetur repellendus optio
-            debitis.
+            ESDR is longest longest-running flagship program of Kathmandu School
+            of Law since 2004. Kathmandu School of Law is a premiere law school
+            located in Bhaktapur, Nepal.
           </p>
           <div className="flex space-x-4 mt-4">
             <Link href="https://twitter.com">
@@ -51,11 +57,6 @@ const Footer = () => {
             <li>
               <Link href="/aboutus" className="hover:text-gray-300">
                 About us
-              </Link>
-            </li>
-            <li>
-              <Link href="/committee" className="hover:text-gray-300">
-                Committee
               </Link>
             </li>
             <li>

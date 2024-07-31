@@ -11,21 +11,21 @@ const CustomCarousel = () => {
 
   const slides = [
     {
-      src: '/upload/carousel1.JPG', // replace with the correct path to your image
+      src: '/upload/carousel1.JPG',
       alt: 'First slide',
       caption: {
         title: 'Kathmandu School of Law',
-        heading: 'ESDR',
-        text: 'Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Pellentesque aliquam dolor eget urna ultricies tincidunt.',
+        heading: '16th ESDR: Decolonizing Law and Justice',
+        text: 'Embracing Diverse Perspectives of International Law',
       },
     },
     {
-      src: '/upload/carousel2.JPG', // replace with the correct path to your image
+      src: '/upload/carousel2.JPG',
       alt: 'Second slide',
       caption: {
         title: 'Kathmandu School of Law',
-        heading: 'ESDR',
-        text: 'Pellentesque aliquam dolor eget urna ultricies tincidunt.',
+        heading: '16th ESDR: Decolonizing Law and Justice',
+        text: 'Social Economic and Development Rights',
       },
     },
   ];
@@ -43,7 +43,7 @@ const CustomCarousel = () => {
   };
 
   useEffect(() => {
-    AOS.init({ duration: 1000 });
+    AOS.init({ duration: 5000 });
   }, []);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const CustomCarousel = () => {
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold" data-aos="fade-right">
                   {slide.caption.heading}
                 </h1>
-                <p className="mb-4 text-sm md:text-lg lg:text-xl" data-aos="fade-down">
+                <p className="mb-4 text-sm md:text-lg lg:text-xl italic" data-aos="fade-down">
                   {slide.caption.text}
                 </p>
                 <div className="space-x-4">

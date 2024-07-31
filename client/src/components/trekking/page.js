@@ -1,14 +1,12 @@
 'use client';
 import React, { useEffect, useState, useRef } from 'react';
-import { Modal } from 'antd';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import 'antd/dist/reset.css';
 
-const images = Array.from({ length: 46 }, (_, i) => `/upload/${i + 1}.jpg`);
+const trekkingImages = Array.from({ length: 9 }, (_, i) => `/upload/trekking${i + 1}.jpg`);
 
-const CustomGallery = () => {
+const Trekking = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visible, setVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -25,7 +23,7 @@ const CustomGallery = () => {
     }
 
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % trekkingImages.length);
     }, 5000);
 
     return () => clearInterval(interval);
@@ -59,16 +57,16 @@ const CustomGallery = () => {
   };
 
   const handlePrevClick = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + trekkingImages.length) % trekkingImages.length);
   };
 
   const handleNextClick = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % trekkingImages.length);
   };
 
   return (
     <div className="relative w-full bg-[#175459] pb-16" data-aos="fade-up" data-aos-delay="300">
-      <h2 className="text-3xl font-bold mb-4 pt-4 text-center text-white">Glimpse From Past ESDR</h2>
+      <h2 className="text-3xl font-bold mb-4 pt-4 text-center text-white">Excursion – Cum – Trekking</h2>
       <div
         className="overflow-hidden flex items-center"
         ref={galleryRef}
@@ -79,9 +77,9 @@ const CustomGallery = () => {
       >
         <div
           className="flex transition-transform duration-500"
-          style={{ transform: `translateX(-${currentIndex * 33.33}%)`, width: `${images.length * 33.33}%` }}
+          style={{ transform: `translateX(-${currentIndex * 33.33}%)`, width: `${trekkingImages.length * 33.33}%` }}
         >
-          {images.map((src, index) => (
+          {trekkingImages.map((src, index) => (
             <div
               key={index}
               className="w-1/3 flex-shrink-0 p-2 box-border"
@@ -109,19 +107,21 @@ const CustomGallery = () => {
         <FaChevronRight size={24} />
       </button>
 
-      <Modal
-        visible={visible}
-        onCancel={() => setVisible(false)}
-        footer={null}
-        centered
-        bodyStyle={{ padding: 0 }}
-        width="60%"
-        style={{ top: '10%', height: 'auto' }}
-      >
-        <img src={previewImage} alt="Preview" style={{ width: '100%', height: 'auto' }} />
-      </Modal>
+      {visible && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="relative bg-white rounded-lg p-4 max-w-3xl mx-auto">
+            <button
+              className="absolute top-0 right-0 m-2 text-gray-600 hover:text-gray-900"
+              onClick={() => setVisible(false)}
+            >
+              &times;
+            </button>
+            <img src={previewImage} alt="Preview" className="w-full h-auto" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default CustomGallery;
+export default Trekking;

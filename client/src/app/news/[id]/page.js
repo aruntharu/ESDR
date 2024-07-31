@@ -105,7 +105,7 @@ const NewsDetails = ({ params }) => {
         pdfPages.length > 0 && (
           <div className="flex justify-center mt-8 mb-11">
             <div className="flipbook-container" style={{ width: '1200px', margin: '0 auto' }}>
-              <PageFlip width={600} height={800}>
+              <PageFlip width={600} height={800} showCover={true} >
                 {pdfPages.map((page, index) => (
                   <div key={index} className="page">
                     <img src={page} alt={`Page ${index + 1}`} className="w-full h-auto" />

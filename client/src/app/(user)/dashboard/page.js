@@ -3,9 +3,12 @@ import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setUserKycVerifiedStatus } from "@/redux/reducerSlices/userSlice";
+import { useRouter } from "next/navigation";
+
 
 const page = () => {
   const dispatch = useDispatch()
+
   useEffect(() => {
     checkKycStatus()
   }, []);
@@ -15,6 +18,7 @@ const page = () => {
     dispatch(setUserKycVerifiedStatus(data.kycVerifiedStatus))
   }
   const { userDetails } = useSelector((state) => state.user);
+
   return (
     <div className="grid grid-cols-4 ">
       <div className="col-span-3">

@@ -8,7 +8,14 @@ import { logoutUser } from "@/redux/reducerSlices/userSlice";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+
 const Layout = ({ children }) => {
+  
+  useEffect(() => {
+    if(userDetails.isLoggedIn){
+      router.push('/')
+    }
+  }, []);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -26,11 +33,29 @@ const Layout = ({ children }) => {
 
   const generateKycDiv = () => {
     if (kycVerifiedStatus === 'unVerified') {
-      return <p className='p-2 bg-orange-100 rounded-lg text-md'> ⚠️Join 16th ESDR. <Link href="/user-kyc">Please Register Now</Link> </p>;
+      return <p className='p-2rounded-lg text-md'> ⚠️Join 16th ESDR.  <Button
+      as={Link}
+      href="/user-kyc"
+      className="bg-[#175459] text-white px-4 py-2 rounded-full"
+    >
+      Apply Now
+    </Button> </p>;
     } else if (kycVerifiedStatus === 'pending') {
-      return <p className='p-2 bg-orange-100 rounded-lg text-md'>Submitted, Wait for form verification. <Link href="/user-kyc">For Correction: Edit Now</Link> </p>;
+      return <p className='p-2 rounded-lg text-md'>Submitted, Wait for form verification.  <Button
+      as={Link}
+      href="/user-kyc"
+      className="bg-[#175459] text-white px-4 py-2 rounded-full"
+    >
+      For Correction: Edit Now
+    </Button></p>;
     } else if (kycVerifiedStatus === 'rejected') {
-      return <p className='p-2 bg-orange-100 rounded-lg text-md'> Your Registration Form was rejected. <Link href="/user-kyc">Re-submit Now</Link> </p>;
+      return <p className='p-2 rounded-lg text-md'> Your Registrataion Form was rejected.<Button
+      as={Link}
+      href="/user-kyc"
+      className="bg-[#175459] text-white px-4 py-2 rounded-full"
+    >
+      Re-submit Now
+    </Button> </p>;
     }
     return null;
   };
@@ -79,8 +104,6 @@ const Layout = ({ children }) => {
                 <DropdownItem key="profile" className="h-14 gap-2">
                   <p className="font-semibold">{userDetails.fullName}</p>
                 </DropdownItem>
-                <DropdownItem key="settings">My Settings</DropdownItem>
-                <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
                 <DropdownItem
                   key="logout"
                   color="danger"

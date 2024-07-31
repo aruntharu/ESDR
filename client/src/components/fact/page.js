@@ -6,10 +6,10 @@ import 'aos/dist/aos.css';
 
 const FactSection = () => {
   const facts = [
-    { value: 99, description: 'Lorem ipsum.', duration: 9 },
-    { value: 1100, description: 'Lorem ipsum.', duration: 5 },
-    { value: 120, description: 'Lorem ipsum.', duration: 8 },
-    { value: 5, description: 'Lorem ipsum.', duration: 10 },
+    { value: 400, description: 'ESDR Alumni', duration: 5 },
+    { value: 15, description: 'ESDR Edition.', duration: 5 },
+    { value: 250, description: 'International Resource Person', duration: 5 },
+    { value: 30, description: 'Country Participation', duration: 5 },
   ];
 
   const [hasAnimated, setHasAnimated] = useState(false);

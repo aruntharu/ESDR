@@ -11,7 +11,7 @@ const CustomNavBar = () => {
     { id: 1, name: "Home", link: "/home" },
     { id: 2, name: "About Us", link: "/aboutus" },
     //{ id: 3, name: "Committee", link: "/committee" },
-    { id: 4, name: "ESDR 2024", link: "/esdr" },
+    { id: 4, name: "ESDR 2024", link: "/esdr2024" },
     { id: 5, name: "Past Events", link: "/news" },
     { id: 6, name: "Contact Us", link: "/contactus" },
   ];
@@ -40,7 +40,7 @@ const CustomNavBar = () => {
                 href="/connectwithus"
                 className="bg-[#175459] text-white px-4 py-2 rounded-full"
               >
-               Apply Now
+               Login
               </Button>
             </NavbarItem>
           </div>

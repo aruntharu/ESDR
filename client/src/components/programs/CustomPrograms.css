@@ -3,8 +3,8 @@
 .card {
   position: relative;
   overflow: hidden;
-  width: 340; /* Increased card width */
-  height: 403px; /* Increased card height */
+  width: 360; /* Increased card width */
+  height: 500px; /* Increased card height */
   border-radius: 0.75rem; /* Rounded borders */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Add a larger shadow */
   margin: 25px; /* Add space between cards */

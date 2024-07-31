@@ -49,8 +49,8 @@ const Venue = () => {
       {/* New Section for h1, p, and carousel */}
       <div className="w-full flex h-[400px]" data-aos="fade-up" data-aos-delay="500">
         <div className="w-1/4 p-4 flex flex-col justify-center">
-          <h1 className="text-3xl font-bold mb-2">Welcome to the Venue</h1>
-          <p className="text-lg">This is where you can find the details about our program venue. Enjoy the visuals!</p>
+          <h1 className="text-3xl font-bold mb-2">Location for ESDR</h1>
+          <p className="text-lg mt-4">International Outreach Research Center is packed with lush green trees and the Himalayas landscape, with fully equipped Internet Services and Accommodation.</p>
         </div>
         <div className="w-3/4 flex items-center justify-center relative">
           <div className="w-full h-full overflow-hidden relative flex items-center justify-center">
