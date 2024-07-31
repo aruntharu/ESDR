@@ -4,6 +4,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Image from "next/image"; // Import Image component
 
 const Page = () => {
   const [paymentList, setPaymentList] = useState([]);
@@ -129,7 +130,7 @@ const Page = () => {
                   {selectedPayment.paymentImages.map((image, index) => (
                     <div key={index}>
                       <p>Payment Image {index + 1}</p>
-                      <img
+                      <Image
                         onClick={() => {
                           window.open(
                             `${process.env.NEXT_PUBLIC_API_URL}uploads/paymentImage/${image}`,
@@ -137,6 +138,9 @@ const Page = () => {
                           ).focus();
                         }}
                         src={`${process.env.NEXT_PUBLIC_API_URL}uploads/paymentImage/${image}`}
+                        alt={`Payment Image ${index + 1}`}
+                        width={500} // Specify appropriate width
+                        height={500} // Specify appropriate height
                       />
                     </div>
                   ))}

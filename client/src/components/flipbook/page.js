@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PageFlip from 'react-pageflip';
 import axios from 'axios';
+import Image from 'next/image'; // Import the Next.js Image component
 
 const FlipBook = () => {
   const [pdfPages, setPdfPages] = useState([]);
@@ -56,12 +57,12 @@ const FlipBook = () => {
                     {/* Show only one page for the cover and end page */}
                     {index === 0 || index === pdfPages.length - 1 ? (
                       <div className="single-page">
-                        <img src={page} alt={`Page ${index + 1}`} className="w-full h-auto" />
+                        <Image src={page} alt={`Page ${index + 1}`} layout="responsive" width={600} height={800} />
                       </div>
                     ) : (
                       <div className="double-page">
                         {/* Ensure a spread for all other pages */}
-                        <img src={page} alt={`Page ${index + 1}`} className="w-full h-auto" />
+                        <Image src={page} alt={`Page ${index + 1}`} layout="responsive" width={600} height={800} />
                       </div>
                     )}
                   </div>

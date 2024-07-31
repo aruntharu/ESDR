@@ -5,6 +5,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image'; // Import the Image component
 
 const UserPayment = () => {
   const router = useRouter();
@@ -52,7 +53,7 @@ const UserPayment = () => {
   return (
     <form className='m-4 flex flex-col border shadow-md rounded-lg p-4 bg-white relative' onSubmit={formik.handleSubmit}>
       <div className="absolute inset-0 z-0">
-        <img src="/esdr.jpg" alt="background" className="w-full h-full object-cover opacity-25" />
+        <Image src="/esdr.jpg" alt="background" layout="fill" objectFit="cover" className="opacity-25" />
       </div>
       <div className="relative z-10">
         <h1 id="header_1" className="text-3xl font-bold my-4">Upload Payment Images</h1>
