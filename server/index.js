@@ -12,7 +12,6 @@ const esdrRoute = require('./src/routes/esdr');
 const paymentRoute = require('./src/routes/payment');
 const contactRoute = require('./src/routes/contact');
 const subscribeRoute = require('./src/routes/subscribe');
-const noticeRoute = require('./src/routes/notice');
 
 dbConnect();
 
@@ -46,7 +45,6 @@ app.use(esdrRoute);
 app.use(paymentRoute);
 app.use(contactRoute);
 app.use(subscribeRoute);
-app.use(noticeRoute);
 app.use('/uploads/committeeImage', express.static(path.join(__dirname, 'uploads/committeeImage')));
 app.use('/uploads/esdrImage', express.static(path.join(__dirname, 'uploads/esdrImage')));
 app.use('/uploads/paymentImage', express.static(path.join(__dirname, 'uploads/paymentImage')));
